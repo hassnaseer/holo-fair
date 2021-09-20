@@ -9,11 +9,12 @@
                 <v-window-item :value="1">
                   <v-row>
                     <v-col cols="12" md="4" class="light-blue darken-2">
-                      <v-card-text class="white--text mt-12">
-                        <h1 class="text-center display-1">Hello, Friend!</h1>
-                        <h3
-                            class="text-center py-5"
-                        >Enter your personal details and start to get the part of our compaign or also you can get the free coupans </h3>
+                      <v-card-title class="white--text">HoloFair Portal</v-card-title>
+                      <v-card-text class="white--text">
+                        <h2
+                            class="py-5"
+                        > JOIN <strong>LEADING</strong> 3D VIRTUAL EVENTS PLATFORMS IN SECONDS </h2>
+                        <span class="text-center">Create your own online custom event, access your events dashboard, and edit your venues easily.</span>
                       </v-card-text>
                       <div class="text-center">
                         <v-btn outlined dark @click="step=3" class="px-8">SIGN UP</v-btn>
@@ -24,7 +25,6 @@
                         <h1
                             class="text-center display-2 light-blue--text py-4"
                         >Sign in to HoloFair App</h1>
-                        <h4 class="text-center my-5">Ensure your email for registration</h4>
                         <v-form @submit.prevent="submitHandler" ref="form">
                           <v-card-text>
                             <v-text-field
@@ -77,7 +77,6 @@
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
                         <h1 class="text-center display-2 light-blue--text text--accent-3 py-4">Forget Password</h1>
-                        <h4 class="text-center my-12">Ensure your email for registration</h4>
                         <v-form @submit.prevent="submitForget" ref="form">
                           <v-text-field
                               v-model="email"
@@ -113,7 +112,6 @@
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
                         <h1 class="text-center display-2 light-blue--text text--accent-3 py-4">Create Account</h1>
-                        <h4 class="text-center my-12">Ensure your email for registration</h4>
                         <v-form @submit.prevent="submitSignup" ref="form">
                           <v-card-text>
                             <v-text-field
@@ -161,7 +159,7 @@
 </template>
 
 <script>
-const userId = '123'
+const userId = '1'
 export default {
   data: () => ({
     step:1,
@@ -186,9 +184,9 @@ export default {
         setTimeout(()=> {
           this.loading = false
           this.snackbar = true
-        },1000)
-        this.$router.push({ path: '/', params: { userId } })
+        },3000)
       }
+      this.$router.push({ path: '/profile', params: { userId } })
     },
     submitSignup(){
       if (this.$refs.form.validate()){

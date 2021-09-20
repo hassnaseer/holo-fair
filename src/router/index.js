@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     component: Dashboard,
-    redirect: '/profile',
+    redirect: '/login',
     children: [
         {
       path: 'overview',
@@ -42,6 +42,54 @@ const routes = [
         component: () => import('../components/Pages/Setup/AttendeesRoles/Roles'),
         meta: { title: 'Attendess Roles' },
       },
+      {
+        path: 'venues/lobby',
+        name: 'Lobby',
+        component: () => import('../components/Pages/Venues/Lobby/Lobby'),
+        meta: { title: 'Lobby' },
+      },
+      {
+        path: 'venues/auditorium',
+        name: 'Auditorium',
+        component: () => import('../components/Pages/Venues/Auditorium/Auditorium'),
+        meta: { title: 'Auditorium' },
+      },
+      {
+        path: 'venues/exhibitionhall',
+        name: 'Exhibition Hall',
+        component: () => import('../components/Pages/Venues/ExhibitionHall/exhibitionHall'),
+        meta: { title: 'Exhibition Hall' },
+      },
+      {
+        path: 'venues/meetingroom',
+        name: 'Meeting Room',
+        component: () => import('../components/Pages/Venues/MeetingRoom/meetingRoom'),
+        meta: { title: 'Meeting Room' },
+      },
+      {
+        path: 'people/attendees',
+        name: 'Attendess',
+        component: () => import('../components/Pages/People/Attendess/Attendess'),
+        meta: { title: 'Attendess' },
+      },
+      {
+        path: 'marketing/emailattendees',
+        name: 'Email Attendees',
+        component: () => import('../components/Pages/Marketing/EmailAttendees/emailAttendess'),
+        meta: { title: 'Email Attendees' },
+      },
+      {
+        path: 'analytics/liveanalytics',
+        name: 'Live Analytics',
+        component: () => import('../components/Pages/Analytics/LiveAnalytics/liveAnalytics'),
+        meta: { title: 'Live Analytics' },
+      },
+      {
+        path: 'analytics/reports',
+        name: 'Reports',
+        component: () => import('../components/Pages/Analytics/Reports/Reports'),
+        meta: { title: 'Reports' },
+      }
     ]
   },
   {

@@ -34,10 +34,10 @@
       </v-list>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block class="mb-3 white--text" color="light-blue darken-2">
+          <v-btn block class="mb-3 white--text" color="light-blue darken-2" @click="Publishevent">
             Publish Event
           </v-btn>
-          <v-btn block class="white--text" color="light-blue darken-2">
+          <v-btn block class="white--text" color="light-blue darken-2" @click="logout" :loading="loading">
             Logout
           </v-btn>
         </div>
@@ -86,51 +86,56 @@
         <strong>Copyrights © 2020 Outreal XR, UAE. All rights reserved.</strong>
       </v-col>
     </v-footer>
+    <v-snackbar top color="green" v-model="snackbar">
+      Event Has been Published Successfully. :)
+    </v-snackbar>
   </div>
 </template>
 <script>
 export default {
   data: () => ({
+    loading:false,
+    snackbar:false,
     drawer: true,
     items: [
       {
         action: 'mdi-silverware-fork-knife',
         items: [
           { title: 'Basics', route: '/setup/basic' },
-          { title: 'Registration Page',route:'/profile' },
-          { title: 'Attendees Roles' },
+          { title: 'Registration Page',route:'/setup/registration' },
+          { title: 'Attendees Roles', route: '/setup/attendeesroles' },
         ],
         title: 'Setup',
       },
       {
         action: 'mdi-school',
         items: [
-            { title: 'Lobby' },
-            { title: 'Auditorium' },
-            { title: 'Exhibition Hall' },
-            { title: 'Meeting Room' },
+            { title: 'Lobby', route: '/venues/lobby' },
+            { title: 'Auditorium',route: '/venues/auditorium'},
+            { title: 'Exhibition Hall', route: '/venues/exhibitionhall' },
+            { title: 'Meeting Room', route: '/venues/meetingroom' },
               ],
         title: 'Venues',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Attendees' }
+          { title: 'Attendees', route: '/people/attendees' }
         ],
         title: 'People',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Email Attendees' }
+          { title: 'Email Attendees', route: '/marketing/emailattendees' }
         ],
         title: 'Marketing',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Live Analytics' },
-          { title: 'Reports' },
+          { title: 'Live Analytics', route: '/analytics/liveanalytics' },
+          { title: 'Reports', route: '/analytics/reports' },
         ],
         title: 'Analytics',
       },
@@ -138,7 +143,17 @@ export default {
   }),
   methods:{
     loader(){
-      alert("Orevie button")
+      alert("overview button")
+    },
+    logout(){
+      this.$router.push({ path: '/login'})
+    },
+    Publishevent(){
+        this.loading = true
+        setTimeout(()=> {
+          this.loading = false
+          this.snackbar = true
+        },3000)
     }
   }
 }

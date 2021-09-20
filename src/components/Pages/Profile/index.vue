@@ -1,5 +1,4 @@
 <template>
-  <v-row>
     <v-container>
       <h2 class="ma-3">Edit Profile</h2>
       <v-row>
@@ -15,6 +14,7 @@
       <v-form @submit.prevent="submitHandler" ref="form">
         <v-row>
           <v-col cols="12" md="6">
+            <v-label>First Name</v-label>
             <v-text-field
                 v-model="firstname"
                 :rules="firstname"
@@ -26,6 +26,7 @@
             />
           </v-col>
           <v-col cols="12" md="6">
+            <v-label>Last Name</v-label>
             <v-text-field
                 v-model="lastname"
                 :rules="lastname"
@@ -37,6 +38,7 @@
             />
           </v-col>
           <v-col cols="12" md="12">
+            <v-label>Email</v-label>
             <v-text-field
                 v-model="email"
                 :rules="emailRules"
@@ -47,6 +49,7 @@
             />
           </v-col>
           <v-col cols="12" md="12">
+            <v-label>Contact Number</v-label>
             <v-text-field
                 v-model="Contact"
                 :rules="Contact"
@@ -57,6 +60,7 @@
             />
           </v-col>
           <v-col cols="12" md="12">
+            <v-label>Address</v-label>
             <v-text-field
                 v-model="Address"
                 :rules="Address"
@@ -67,6 +71,7 @@
             />
           </v-col>
           <v-col cols="12" md="6">
+            <v-label>City</v-label>
             <v-text-field
                 v-model="city"
                 type="email"
@@ -76,6 +81,7 @@
             />
           </v-col>
           <v-col cols="12" md="6">
+            <v-label>State</v-label>
             <v-text-field
                 v-model="state"
                 :type="state"
@@ -85,6 +91,7 @@
             />
           </v-col>
           <v-col cols="12" md="6">
+            <v-label>Zip Code</v-label>
             <v-text-field
                 v-model="zipcode"
                 type="zipcode"
@@ -94,6 +101,7 @@
             />
           </v-col>
           <v-col cols="12" md="6">
+            <v-label>Country</v-label>
             <v-text-field
                 v-model="country"
                 :type="country"
@@ -103,6 +111,7 @@
             />
           </v-col>
           <v-col cols="12" md="12">
+            <v-label>Password</v-label>
             <v-text-field
                 v-model="password"
                 :rules="passwordRules"
@@ -121,7 +130,6 @@
         </v-row>
       </v-form>
     </v-container>
-  </v-row>
 </template>
 <script>
 export default {
