@@ -62,8 +62,8 @@
                 <v-window-item :value="2">
                   <v-row class="fill-height">
                     <v-col cols="12" md="4" class="light-blue darken-2">
+                      <v-card-title class="white--text">Welcome Back!</v-card-title>
                       <v-card-text class="white--text mt-12">
-                        <h1 class="text-center display-1">Welcome Back!</h1>
                         <h3
                             class="text-center py-5"
                         >To Keep connected with us please login with your personnel info
@@ -98,8 +98,8 @@
                 <v-window-item :value="3">
                   <v-row class="fill-height">
                     <v-col cols="12" md="4" class="light-blue darken-2">
+                      <v-card-title class="white--text">Welcome Back!</v-card-title>
                       <v-card-text class="white--text mt-12">
-                        <h1 class="text-center display-1">Welcome Back!</h1>
                         <h3
                             class="text-center py-5"
                         >To Keep connected with us please login with your personnel info</h3>

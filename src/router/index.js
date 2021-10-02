@@ -19,9 +19,15 @@ const routes = [
       meta: { title: 'Overview' }
        },
       {
+        path: 'profile2',
+        name: 'Profile2',
+        component: () => import('../components/Pages/Profile/index'),
+        meta: { title: 'Profile2' }
+      },
+      {
         path: 'profile',
         name: 'Profile',
-        component: () => import('../components/Pages/Profile/index'),
+        component: () => import('../components/Pages/Profile/userProfile'),
         meta: { title: 'Profile' }
       },
       {
