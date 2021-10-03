@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="mb-11">
     <v-row>
-      <v-col cols="8">
+      <v-col cols="12" sm="12" md="8" lg="8">
         <v-stepper
             v-model="e6"
             vertical
@@ -102,7 +102,7 @@
           </v-row>
         </v-stepper>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="12" sm="12" md="4" lg="4">
         <v-card
             outlined
             class="pa-3"
@@ -115,7 +115,6 @@
         </v-card>
       </v-col>
     </v-row>
-
   </v-container>
 </template>
 <script>
