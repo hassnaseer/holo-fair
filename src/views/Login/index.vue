@@ -186,7 +186,7 @@ export default {
           this.snackbar = true
         },3000)
       }
-      this.$router.push({ path: '/profile', params: { userId } })
+      this.$router.push({ path: '/overview', params: { userId } })
     },
     submitSignup(){
       if (this.$refs.form.validate()){
