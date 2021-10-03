@@ -1,5 +1,8 @@
   <template>
-  <v-sparkline
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-sparkline
     :value="value"
     color="skyblue"
     :smooth="radius || false"
@@ -12,6 +15,10 @@
     :auto-line-width="autoLineWidth"
     auto-draw
   ></v-sparkline>
+      </v-col>
+    </v-row>
+  </v-container>
+
 </template>
 <script>
   const gradients = [

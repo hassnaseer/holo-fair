@@ -109,6 +109,28 @@
                 Please refer to the image below
               </span>
             </v-col>
+            <v-col
+        cols="12"
+        md="6"
+        lg="6"
+        sm="12"
+      >
+      <h2>Text Message to be Displayed</h2>
+        <v-textarea
+          solo
+          name="input-7-4"
+          label="Solo textarea"
+        ></v-textarea>
+      </v-col>
+      <v-col cols="12">
+        <v-checkbox v-model="checkbox">
+      <template v-slot:label>
+        <div>
+          Include red ribon infront of Venue
+        </div>
+      </template>
+    </v-checkbox>
+      </v-col>
           </v-row>
       </v-card-text>
       <v-card-actions class="justify-center">
@@ -144,7 +166,6 @@ export default {
 </script>
 <style>
 .main-text{
-  font-size: 38px;
-  word-spacing: 1rem;
+  font-size: 30px;
 }
 </style>
