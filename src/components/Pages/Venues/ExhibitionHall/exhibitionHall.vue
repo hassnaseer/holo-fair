@@ -1,41 +1,28 @@
 <template>
-<v-container fluid>
-<a-upload-dragger
-    name="file"
-    :multiple="true"
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-    @change="handleChange"
-  >
-    <p class="ant-upload-drag-icon">
-      <a-icon type="inbox" />
-    </p>
-    <p class="ant-upload-text">
-      Click or drag file to this area to upload
-    </p>
-    <p class="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </a-upload-dragger>
-</v-container>
+  <v-card class="pa-5">
+    <a-tabs default-active-key="1" @change="callback">
+      <a-tab-pane key="1" tab="Venue Content">
+        <Venue />
+      </a-tab-pane>
+      <a-tab-pane key="2" tab="Exhibitor Booth Content" force-render>
+        <Exhibitor />
+      </a-tab-pane>
+    </a-tabs>
+  </v-card>
 </template>
 <script>
+import Venue from './Venue.vue'
+import Exhibitor from './Exhibitor.vue'
 export default {
-  data() {
-    return {};
+  components: {
+    Venue,
+    Exhibitor
   },
   methods: {
-    handleChange(info) {
-      const status = info.file.status;
-      if (status !== 'uploading') {
-        alert(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        this.$message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        this.$message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+    // callback(key) {
+    //   alert(key);
+    // },
   },
 };
 </script>
+
