@@ -1,4 +1,7 @@
 <template>
+<v-container fluid>
+  <v-row>
+    <v-col lg="12" md="12" sm="12">
   <v-data-table
     :headers="headers"
     :items="desserts"
@@ -41,6 +44,16 @@
                     <v-text-field
                       v-model="editedItem.name"
                       label="User"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.roles"
+                      label="Roles"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -133,6 +146,16 @@
       </v-btn>
     </template>
   </v-data-table>
+    </v-col>
+    <v-col cols="2" class="text-center">
+          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
+        </v-col>
+        <v-col cols="2" class="text-center">
+          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
+        </v-col>
+  </v-row>
+</v-container>
+
 </template>
 <script>
   export default {
@@ -149,6 +172,7 @@
         { text: 'Mobile', value: 'calories' },
         { text: 'Email', value: 'fat' },
         { text: 'Status', value: 'carbs' },
+        { text: 'Roles', value: 'roles' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       desserts: [],
@@ -158,12 +182,14 @@
         calories: '',
         fat: 0,
         carbs: 0,
+        roles:'',
       },
       defaultItem: {
         name: '',
         calories: 0,
         fat: 0,
         carbs: 0,
+        roles:'',
       },
     }),
 
@@ -199,12 +225,14 @@
             calories: '+914135597864',
             fat: 'anurag@outrealxr.com',
             carbs: 'Active',
+            roles:'admin',
           },
           {
             name: 'Anurag',
             calories: '+914135597864',
             fat: 'anurag@outrealxr.com',
             carbs: 'Active',
+            roles:'client',
           },
         ]
       },

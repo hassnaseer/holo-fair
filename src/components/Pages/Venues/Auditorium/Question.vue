@@ -1,7 +1,9 @@
 <template>
 <div class="row">
 <div class="col-lg-12">
+  <h1>
 Below you find questions from your atendees. Please share these queries, so that they may anser them during their live sessions.
+  </h1>
 </div>
 <div class="col-lg-12 mx-auto">
   <v-card
