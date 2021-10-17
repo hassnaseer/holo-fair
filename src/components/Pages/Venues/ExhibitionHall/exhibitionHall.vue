@@ -19,9 +19,6 @@ export default {
     Exhibitor
   },
   methods: {
-    // callback(key) {
-    //   alert(key);
-    // },
   },
 };
 </script>

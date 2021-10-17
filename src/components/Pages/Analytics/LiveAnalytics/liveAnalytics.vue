@@ -1,48 +1,25 @@
-  <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-sparkline
-    :value="value"
-    color="skyblue"
-    :smooth="radius || false"
-    :padding="padding"
-    :line-width="width"
-    :stroke-linecap="lineCap"
-    :gradient-direction="gradientDirection"
-    :fill="fill"
-    :type="type"
-    :auto-line-width="autoLineWidth"
-    auto-draw
-  ></v-sparkline>
-      </v-col>
-    </v-row>
-  </v-container>
-
+<template>
+  <v-card class="pa-5">
+    <a-tabs default-active-key="1" @change="callback">
+      <a-tab-pane key="1" tab="Acrive User Bt Time">
+        <ActiveUserByTime />
+      </a-tab-pane>
+      <a-tab-pane key="2" tab="Active User By Area" force-render>
+        <ActiveUserByArea />
+      </a-tab-pane>
+    </a-tabs>
+  </v-card>
 </template>
 <script>
-  const gradients = [
-    ['#222'],
-    ['#42b3f4'],
-    ['red', 'orange', 'yellow'],
-    ['purple', 'violet'],
-    ['#00c6ff', '#F0F', '#FF0'],
-    ['#f72047', '#ffd200', '#1feaea'],
-  ]
-
-  export default {
-    data: () => ({
-      width: 2,
-      radius: 10,
-      padding: 8,
-      lineCap: 'round',
-      gradient: gradients[1],
-      value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-      gradientDirection: 'top',
-      gradients,
-      fill: false,
-      type: 'trend',
-      autoLineWidth: true,
-    }),
-  }
+import ActiveUserByTime from './userByTime.vue'
+import ActiveUserByArea from './userByArea.vue'
+export default {
+  components: {
+    ActiveUserByTime,
+    ActiveUserByArea
+  },
+  methods: {
+  },
+};
 </script>
+
