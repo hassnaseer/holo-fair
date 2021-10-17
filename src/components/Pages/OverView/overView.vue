@@ -8,28 +8,41 @@
             class="pa-2"
         >
           <v-row>
+            <v-col cols="4">
             <v-stepper-step
-                :complete="e6 > 1"
+                 :complete="e6 > 1"
                 step="1"
             >
               Setup Event
             </v-stepper-step>
+            </v-col>
+            <v-col cols="8">
             <v-stepper-content step="1">
-              <v-card
-                  color="grey lighten-1"
-                  class="mb-12"
-                  height="200px"
-              ></v-card>
+              <v-row>
+                <v-col cols="12">
+                  <v-btn class="float-right">
+                    Hide Checklist
+                  </v-btn>
+                </v-col>
+                <v-col cols="2">
+                  <a-icon type="account-book" :style="{ fontSize: '40px'}" />
+                </v-col>
+                <v-col cols="8">
+                  <h3>Check your Event Details</h3>
+                  <p>Add the basic - date, time and areas for your event.</p>
+                </v-col>
+                <v-col cols="2">
+                  <a-icon type="right" />
+                </v-col>
+              </v-row>
               <v-btn
                   color="primary"
                   @click="e6 = 2"
               >
-                Continue
-              </v-btn>
-              <v-btn text>
-                Cancel
+                Skip Step
               </v-btn>
             </v-stepper-content>
+            </v-col>
           </v-row>
           <v-row>
             <v-stepper-step
