@@ -51,7 +51,7 @@
             color="light-blue"
             @click="loader"
         >
-          Preview Eevents
+          Preview Events
         </v-btn>
         <v-menu
             open-on-hover
