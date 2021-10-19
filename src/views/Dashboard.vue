@@ -51,7 +51,7 @@
             color="light-blue"
             @click="loader"
         >
-          Accept Terms
+          Preview Eevents
         </v-btn>
         <v-menu
             open-on-hover

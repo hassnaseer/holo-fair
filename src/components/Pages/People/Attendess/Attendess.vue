@@ -25,7 +25,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              New Item
+             ADD New User
             </v-btn>
           </template>
           <v-card>
@@ -43,7 +43,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.name"
-                      label="User"
+                      label="User Name"
                     ></v-text-field>
                   </v-col>
                    <v-col
@@ -62,28 +62,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.calories"
-                      label="Mobile"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
                       v-model="editedItem.fat"
                       label="Email"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Status"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -164,14 +144,12 @@
       dialogDelete: false,
       headers: [
         {
-          text: 'User',
+          text: 'User Name',
           align: 'start',
           sortable: false,
           value: 'name',
         },
-        { text: 'Mobile', value: 'calories' },
         { text: 'Email', value: 'fat' },
-        { text: 'Status', value: 'carbs' },
         { text: 'Roles', value: 'roles' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
@@ -179,23 +157,19 @@
       editedIndex: -1,
       editedItem: {
         name: '',
-        calories: '',
-        fat: 0,
-        carbs: 0,
+        fat: '',
         roles:'',
       },
       defaultItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
+        fat: '',
         roles:'',
       },
     }),
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'New User' : 'Edit User'
       },
     },
 
@@ -222,16 +196,12 @@
         this.desserts = [
           {
             name: 'Anurag',
-            calories: '+914135597864',
             fat: 'anurag@outrealxr.com',
-            carbs: 'Active',
             roles:'admin',
           },
           {
             name: 'Anurag',
-            calories: '+914135597864',
             fat: 'anurag@outrealxr.com',
-            carbs: 'Active',
             roles:'client',
           },
         ]
