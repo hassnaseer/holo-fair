@@ -25,6 +25,12 @@ const routes = [
         meta: { title: 'Profile2' }
       },
       {
+        path: 'chat',
+        name: 'Chat',
+        component: () => import('../components/Chat/chat'),
+        meta: { title: 'Chat' }
+      },
+      {
         path: 'profile',
         name: 'Profile',
         component: () => import('../components/Pages/Profile/userProfile'),
