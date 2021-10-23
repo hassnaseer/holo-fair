@@ -1,24 +1,76 @@
 <template>
-<div class="row">
-<div class="col-lg-12 mx-auto">
-  <v-card>
-      <v-card-title>
-          Black data here
-      </v-card-title>
-  </v-card>
-</div>
- <v-col cols="1" lg="1" md="1" sm="1" class="pl-12">
-<a-icon type="exclamation-circle" :style="{ fontSize: '30px'}"/>
-  </v-col>
-  <v-col col="10" lg="10" md="10" sm="10">
-    <h3>Max.Upload Size is : 2MB,</h3>
-    <h3>Recomended size is 2000* 800 px (5:2)</h3>
-  </v-col>
-<v-col cols="2" class="text-center">
-          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
-        </v-col>
-        <v-col cols="2" class="text-center">
-          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
-        </v-col>
-</div>
+  <div class="container pa-5">
+    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+      <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <input class="fs-5 fw-semibold" v-model="username"/>
+      </div>
+      <div class="list-group list-group-flush border-bottom scrollarea">
+        <div class="list-group-item list-group-item-action py-3 lh-tight"
+             v-for="message in messages" :key="message"
+        >
+          <div class="d-flex w-100 align-items-center justify-content-between">
+            <strong class="mb-1">{{ message.username }}</strong>
+          </div>
+          <div class="col-10 mb-1 small">{{ message.message }}</div>
+        </div>
+      </div>
+    </div>
+    <form @submit.prevent="submit">
+      <input class="form-control" placeholder="Write a message" v-model="message"/>
+      <button type="submit">submit</button>
+    </form>
+  </div>
 </template>
+
+<script>
+import {ref, onMounted} from 'vue';
+import Pusher from 'pusher-js';
+
+export default {
+  name: 'App',
+  setup() {
+    const username = ref('username');
+    const messages = ref([]);
+    const message = ref('');
+
+    onMounted(() => {
+      Pusher.logToConsole = true;
+
+      const pusher = new Pusher('25291c0752d6089a660c', {
+        cluster: 'eu'
+      });
+
+      const channel = pusher.subscribe('chat');
+      channel.bind('message', data => {
+        messages.value.push(data);
+      });
+    })
+
+    const submit = async () => {
+      await fetch('http://localhost:8000/api/messages', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          username: username.value,
+          message: message.value
+        })
+      })
+
+      message.value = '';
+    }
+
+    return {
+      username,
+      messages,
+      message,
+      submit
+    }
+  }
+}
+</script>
+
+<style>
+.scrollarea {
+  min-height: 500px;
+}
+</style>
