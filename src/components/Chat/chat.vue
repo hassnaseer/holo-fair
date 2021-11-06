@@ -26,7 +26,7 @@
         @onImageSelected="onImageSelected"
         @onMessageSubmit="onMessageSubmit"
         @onType="onType"
-        @onClose="onClose"/>
+        />
    </div>
 
 </template>
@@ -44,18 +44,18 @@ export default {
             visible: true,
             participants: [
                 {
-                    name: 'Arnaldo',
+                    name: 'User1',
                     id: 1,
                     profilePicture: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg'
                 },
                 {
-                    name: 'José',
+                    name: 'User2',
                     id: 2,
                     profilePicture: 'https://lh3.googleusercontent.com/-G1d4-a7d_TY/AAAAAAAAAAI/AAAAAAAAAAA/AAKWJJPez_wX5UCJztzEUeCxOd7HBK7-jA.CMID/s83-c/photo.jpg'
                 }
             ],
             myself: {
-                name: 'Matheus S.',
+                name: 'Agent',
                 id: 3,
                 profilePicture: 'https://lh3.googleusercontent.com/-G1d4-a7d_TY/AAAAAAAAAAI/AAAAAAAAAAA/AAKWJJPez_wX5UCJztzEUeCxOd7HBK7-jA.CMID/s83-c/photo.jpg'
             },
