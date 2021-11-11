@@ -5,7 +5,7 @@
       <img src="../../public/HoloFair-by-Outreal-XR-Logo.png" alt="" class="img pt-2 pl-5">
       <v-list class="pa-2">
         <v-list-item to="/overview" link active-class="bg-active">
-          <v-list-item-title>Over View</v-list-item-title>
+          <v-list-item-title>OverView</v-list-item-title>
         </v-list-item>
         <v-list-group
             v-for="item in items"
@@ -44,7 +44,7 @@
     </v-navigation-drawer>
     <v-app-bar app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-lg-none"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>{{count}}</v-toolbar-title>
       <div class="ml-auto">
         <v-btn
             class="white--text d-none d-sm-inline-block"
@@ -95,6 +95,7 @@
 </template>
 <script>
 export default {
+  
   data: () => ({
     loading:false,
     snackbar:false,
@@ -143,9 +144,15 @@ export default {
       },
     ],
   }),
+  computed:  {
+    count (){
+      return JSON.stringify(this.$route.name)
+    }
+  },
   methods:{
-    loader(){
-      alert("overview button")
+    
+    loader(){   
+      alert('data here')
     },
     logout(){
       this.$router.push({ path: '/login'})
