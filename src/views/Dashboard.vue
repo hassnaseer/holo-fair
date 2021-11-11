@@ -151,11 +151,30 @@ export default {
       this.$router.push({ path: '/login'})
     },
     Publishevent(){
-      this.loading = true
-      setTimeout(()=> {
-        this.loading = false
-        this.snackbar = true
-      },3000)
+      this.$confirm(
+        {
+          title: 'Are you sure you want to Publish this event?',
+        message: 'Are you sure you want to logout?',
+          button: {
+            no: 'No',
+            yes: 'Yes'
+          },
+          /**
+          * Callback Function
+          * @param {Boolean} confirm 
+          */
+          callback: confirm => {
+            if (confirm) {
+              // ... do something
+            }
+          }
+        }
+      )
+      // this.loading = true
+      // setTimeout(()=> {
+      //   this.loading = false
+      //   this.snackbar = true
+      // },3000)
     }
   }
 }

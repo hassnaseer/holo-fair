@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard'
 import Login from '../views/Login/index'
+import Signup from '../views/signup/index'
+import Forgetpassword from '../views/forgetpassword/index'
 import OverView from '../components/Pages/OverView/overView'
 
 Vue.use(VueRouter)
@@ -108,6 +110,16 @@ const routes = [
     path: '/Login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/forgetpassword',
+    name: 'Forgetpassword',
+    component: Forgetpassword
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: Signup
   },
   {
     path: '/overview',

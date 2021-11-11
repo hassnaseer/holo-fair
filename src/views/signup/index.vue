@@ -5,25 +5,23 @@
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
             <v-card class="elevation-12">
-                  <v-row>
+                <v-row class="fill-height">
                     <v-col cols="12" md="4" class="light-blue darken-2">
-                      <v-card-title class="white--text">HoloFair Portal</v-card-title>
-                      <v-card-text class="white--text">
-                        <h2
-                            class="py-5"
-                        > JOIN <strong>LEADING</strong> 3D VIRTUAL EVENTS PLATFORMS IN SECONDS </h2>
-                        <span class="text-center">Create your own online custom event, access your events dashboard, and edit your venues easily.</span>
+                      <v-card-title class="white--text">Welcome Back!</v-card-title>
+                      <v-card-text class="white--text mt-12">
+                        <h3
+                            class="text-center py-5"
+                        >To Keep connected with us please login with your personnel info</h3>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn outlined dark class="px-8" v-on:click="signup">SIGN UP</v-btn>
+                        <v-btn rounded outlined dark v-on:click="login">Sign in</v-btn>
                       </div>
                     </v-col>
+
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
-                        <h1
-                            class="text-center display-2 light-blue--text py-4"
-                        >Sign in to HoloFair App</h1>
-                        <v-form @submit.prevent="submitHandler" ref="form">
+                        <h1 class="text-center display-2 light-blue--text text--accent-3 py-4">Create Account</h1>
+                        <v-form @submit.prevent="submitSignup" ref="form">
                           <v-card-text>
                             <v-text-field
                                 v-model="email"
@@ -45,13 +43,10 @@
                                 @click:append="passwordShow = !passwordShow"
                                 required
                             />
-                            <h3 class="text-center mt-4 forget" v-on:click="forget">Forgot your password ?</h3>
                           </v-card-text>
-                          <v-card-actions class="justify-center">
-                            <div class="text-center">
-                              <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Login</v-btn>
-                            </div>
-                          </v-card-actions>
+                          <div class="text-center mt-n5">
+                            <v-btn color="light-blue darken-2" type="submit" @click="step=1" dark>SIGN UP</v-btn>
+                          </div>
                         </v-form>
                       </v-card-text>
                     </v-col>
@@ -61,8 +56,8 @@
         </v-row>
       </v-container>
     </v-content>
-    <v-snackbar top color="green" v-model="snackbar">
-      Login success
+    <v-snackbar top color="green" v-model="snackbarr">
+      Sign Up Successfully.
     </v-snackbar>
   </v-app>
 </template>
@@ -85,22 +80,21 @@ export default {
     ],
   }),
   methods:{
-    submitHandler(){
+    submitSignup(){
       if (this.$refs.form.validate()){
         this.loading = true
         setTimeout(()=> {
           this.loading = false
-          this.snackbar = true
-        },5000)
-      this.$router.push({ path: '/overview'})
-      this.snackbar = true
+          this.snackbarr = true
+        },5000,
+        this.$router.push({ path: '/Login'})
+        )
+        
+        this.snackbar = true
       }
     },
-    forget () {
-      this.$router.push({ path: '/forgetpassword'})
-    },
-    signup (){
-      this.$router.push({ path: '/signup'})
+    login(){
+        this.$router.push({ path: '/Login'})
     }
   },
   props: {
