@@ -85,7 +85,7 @@
           text
           cols="12"
       >
-        <strong>Copyrights © 2020 Outreal XR, UAE. All rights reserved.</strong>
+        <strong>Copyrights © 2021 Outreal XR, UAE. All rights reserved.</strong>
       </v-col>
     </v-footer>
     <v-snackbar top color="green" v-model="snackbar">

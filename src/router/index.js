@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard'
 import Login from '../views/Login/index'
 import Signup from '../views/signup/index'
+import Reset from '../views/resetpassword'
 import Forgetpassword from '../views/forgetpassword/index'
 import OverView from '../components/Pages/OverView/overView'
 
@@ -120,6 +121,11 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: Signup
+  },
+  {
+    path: '/resetpassword',
+    name: 'Reset',
+    component: Reset
   },
   {
     path: '/overview',

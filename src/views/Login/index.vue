@@ -92,8 +92,10 @@ export default {
           this.loading = false
           this.snackbar = true
         },5000)
-      this.$router.push({ path: '/overview'})
+      // this.$router.push({ path: '/overview'})
+      // alert(this.password)
       this.snackbar = true
+      this.$router.push({ path: '/overview'})
       }
     },
     forget () {

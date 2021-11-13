@@ -1,119 +1,34 @@
 <template>
-  <v-container fluid class="mb-11">
+  <v-container fluid class="margin-botton">
     <v-row>
       <v-col cols="12" sm="12" md="8" lg="8">
-        <v-stepper
-            v-model="e6"
-            vertical
-            class="pa-2"
-        >
           <v-row>
-            <v-col cols="4">
-            <v-stepper-step
-                 :complete="e6 > 1"
-                step="1"
-            >
-              Setup Event
-            </v-stepper-step>
+            <v-col cols="12" sm="12" md="4" lg="4">
+    <a-steps :current="current" direction="vertical">
+      <a-step v-for="item in steps" :key="item.title" :title="item.title" />
+    </a-steps>
             </v-col>
-            <v-col cols="8">
-            <v-stepper-content step="1">
-              <v-row>
-                <v-col cols="12">
-                  <v-btn class="float-right">
-                    Hide Checklist
-                  </v-btn>
-                </v-col>
-                <v-col cols="2">
-                  <a-icon type="account-book" :style="{ fontSize: '40px'}" />
-                </v-col>
-                <v-col cols="8">
-                  <h3>Check your Event Details</h3>
-                  <p>Add the basic - date, time and areas for your event.</p>
-                </v-col>
-                <v-col cols="2">
-                  <a-icon type="right" />
-                </v-col>
-              </v-row>
-              <v-btn
-                  color="primary"
-                  @click="e6 = 2"
-              >
-                Skip Step
-              </v-btn>
-            </v-stepper-content>
+            <v-col cols="12" sm="12" md="8" lg="8" class="steps-border">
+    <div class="steps-content">
+      <component :is="steps[current].content" />
+    </div>
+    <div class="steps-action">
+      <a-button v-if="current < steps.length - 1" type="primary" @click="next">
+        Skip Setup
+      </a-button>
+      <a-button
+        v-if="current == steps.length - 1"
+        type="primary"
+        @click="$message.success('Processing complete!')"
+      >
+        Publish
+      </a-button>
+      <a-button v-if="current > 0" style="margin-left: 8px" @click="prev">
+        Back
+      </a-button>
+    </div>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-stepper-step
-                :complete="e6 > 2"
-                step="2"
-            >
-              Build Venue
-            </v-stepper-step>
-            <v-stepper-content step="2">
-              <v-card
-                  color="grey lighten-1"
-                  class="mb-12"
-                  height="200px"
-              ></v-card>
-              <v-btn
-                  color="primary"
-                  @click="e6 = 3"
-              >
-                Continue
-              </v-btn>
-              <v-btn text>
-                Cancel
-              </v-btn>
-            </v-stepper-content>
-          </v-row>
-          <v-row>
-            <v-stepper-step
-                :complete="e6 > 3"
-                step="3"
-            >
-              Add Speakers
-            </v-stepper-step>
-            <v-stepper-content step="3">
-              <v-card
-                  color="grey lighten-1"
-                  class="mb-12"
-                  height="200px"
-              ></v-card>
-              <v-btn
-                  color="primary"
-                  @click="e6 = 4"
-              >
-                Continue
-              </v-btn>
-              <v-btn text>
-                Cancel
-              </v-btn>
-            </v-stepper-content>
-          </v-row>
-          <v-row>
-            <v-stepper-step step="4">
-              Preview & Published
-            </v-stepper-step>
-            <v-stepper-content step="4">
-              <v-card
-                  color="grey lighten-1"
-                  class="mb-12"
-                  height="200px"
-              ></v-card>
-              <v-btn
-                  color="primary"
-                  @click="e6 = 1"
-              >
-                Continue
-              </v-btn>
-              <v-btn text>
-                Cancel
-              </v-btn>
-            </v-stepper-content>
-          </v-row>
-        </v-stepper>
+  </v-row>
       </v-col>
       <v-col cols="12" sm="12" md="4" lg="4">
         <v-card
@@ -131,12 +46,59 @@
   </v-container>
 </template>
 <script>
+import FirstContent from './steps/step1.vue'
+
 export default {
-  name:'Profile',
-  data () {
+  data() {
     return {
-      e6: 1,
-    }
+      current: 0,
+      steps: [
+        {
+          title: 'Step Event',
+          content: FirstContent,
+        },
+        {
+          title: 'Build Venue',
+          content: 'Second-content',
+        },
+        {
+          title: 'Add Speakers',
+          content: 'Last-content',
+        },
+        {
+          title: 'Preview & Publish',
+          content: 'Last-content',
+        },
+      ],
+    };
   },
-}
+  methods: {
+    next() {
+      this.current++;
+    },
+    prev() {
+      this.current--;
+    },
+  },
+};
 </script>
+<style scoped>
+.margin-botton{
+  margin-bottom: 214px;
+}
+.steps-border{
+  border-left: 1px solid gray;
+}
+.steps-content {
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  min-height: 200px;
+  padding: 8px;
+  text-align: center;
+}
+
+.steps-action {
+  margin-top: 24px;
+}
+</style>
