@@ -2,9 +2,10 @@
   <v-container fluid class="margin-botton">
     <v-row>
       <v-col cols="12" sm="12" md="8" lg="8">
-          <v-row>
+          <v-card class="px-3">
+            <v-row>
             <v-col cols="12" sm="12" md="4" lg="4">
-    <a-steps :current="current" direction="vertical">
+    <a-steps :current="current" direction="vertical" @change="onChange" v-model="current">
       <a-step v-for="item in steps" :key="item.title" :title="item.title" />
     </a-steps>
             </v-col>
@@ -29,6 +30,7 @@
     </div>
             </v-col>
   </v-row>
+          </v-card>
       </v-col>
       <v-col cols="12" sm="12" md="4" lg="4">
         <v-card
@@ -78,6 +80,10 @@ export default {
     },
     prev() {
       this.current--;
+    },
+        onChange(current) {
+      // alert('onChange:', current);
+      this.current = current;
     },
   },
 };

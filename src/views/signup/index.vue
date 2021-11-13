@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data: () => ({
     loading:false,
@@ -80,14 +81,19 @@ export default {
     ],
   }),
   methods:{
-    submitSignup(){
+    async submitSignup(){
       if (this.$refs.form.validate()){
         this.loading = true
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/signup",{
+          email:this.email,
+          password: this.password
+        });
         setTimeout(()=> {
           this.loading = false
           this.snackbarr = true
         },5000,
-        this.$router.push({ path: '/Login'})
+        // this.$router.push({ path: '/Login'})
+        alert(result)
         )
         
         this.snackbar = true
