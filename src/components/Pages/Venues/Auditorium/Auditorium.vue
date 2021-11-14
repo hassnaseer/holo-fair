@@ -14,6 +14,14 @@
 import Agenda from './Agenda.vue';
 import Question from './Question.vue';
 export default {
+    beforeRouteEnter (to, from, next) {
+      const token = localStorage.getItem('token')
+  if(token){
+    next()
+  }
+  else
+    next('/login')
+  },
   components: {
     Agenda,
     Question

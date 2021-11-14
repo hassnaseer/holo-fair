@@ -31,6 +31,14 @@
 <script>
 // import { Icon } from 'ant-design-vue';
 export default {
+    beforeRouteEnter (to, from, next) {
+      const token = localStorage.getItem('token')
+  if(token){
+    next()
+  }
+  else
+    next('/login')
+  },
   data() {
     return {};
   },

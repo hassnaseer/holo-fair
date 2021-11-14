@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="icons-list">
+  <!-- <div class="icons-list">
   <a-icon type="wechat" v-bind="attrs"
           v-on="on"/>
     <v-dialog
@@ -16,7 +16,7 @@
         <Chat />
       </v-card>
     </v-dialog>
-  </div>
+  </div> -->
 <v-app>
     <v-content>
       <notifications group="foo" position="top center" />
@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import Chat from "./components/Chat/chat.vue";
+// import Chat from "./components/Chat/chat.vue";
   export default {
     components:{
-Chat
+// Chat
     },
     data () {
       return {

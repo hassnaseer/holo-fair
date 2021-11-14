@@ -50,9 +50,21 @@
 <script>
 import FirstContent from './steps/step1.vue'
 
+
 export default {
+
+  beforeRouteEnter (to, from, next) {
+      const token = localStorage.getItem('token')
+  if(token){
+    next()
+  }
+  else
+    next('/login')
+  },
   data() {
+    
     return {
+
       current: 0,
       steps: [
         {
@@ -75,6 +87,7 @@ export default {
     };
   },
   methods: {
+    
     next() {
       this.current++;
     },

@@ -19,6 +19,14 @@ import EditProfileForm from './UserProfile/EditProfileForm.vue'
 import UserCard from './UserProfile/UserCard.vue'
 
 export default {
+    beforeRouteEnter (to, from, next) {
+      const token = localStorage.getItem('token')
+  if(token){
+    next()
+  }
+  else
+    next('/login')
+  },
   components: {
     EditProfileForm,
     UserCard

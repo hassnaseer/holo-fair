@@ -14,6 +14,14 @@
 import Venue from './Venue.vue'
 import Exhibitor from './Exhibitor.vue'
 export default {
+    beforeRouteEnter (to, from, next) {
+      const token = localStorage.getItem('token')
+  if(token){
+    next()
+  }
+  else
+    next('/login')
+  },
   components: {
     Venue,
     Exhibitor

@@ -19,11 +19,11 @@
           <v-layout wrap>
             <v-flex xs12 sm6 md6>
               <v-label>First Name</v-label>
-              <v-text-field required outlined v-model="FirstName"></v-text-field>
+              <v-text-field required outlined v-model="firstName"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md6>
               <v-label>Last Name</v-label>
-              <v-text-field required outlined v-model="LastName"></v-text-field>
+              <v-text-field required outlined v-model="lastName"></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-label>Email</v-label>
@@ -36,21 +36,21 @@
             </v-flex>
             <v-flex xs12>
               <v-label>Address</v-label>
-              <v-text-field outlined type="address" required v-model="Address"></v-text-field>
+              <v-text-field outlined type="address" required v-model="address"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6>
               <v-label>City</v-label>
               <v-select
                   :items="['Lahore', 'Canada', 'India', 'America']"
                   outlined
-                  v-model="SelectCity"
+                  v-model="city"
                   required
               ></v-select>
             </v-flex>
             <v-flex xs12 sm6>
               <v-label>State</v-label>
               <v-select
-              v-model="SelectState"
+              v-model="State"
                   :items="['Punjab', 'Canada', 'India', 'America']"
                   outlined
                   required
@@ -59,7 +59,7 @@
             <v-flex xs12 sm6>
               <v-label>Zip Code</v-label>
               <v-select
-              v-model="SelectCode"
+              v-model="zipCode"
                   :items="['54000', '51700', '98000', '6100']"
                   outlined
                   required
@@ -68,13 +68,13 @@
             <v-flex xs12 sm6>
               <v-label>Country</v-label>
               <v-select
-              v-model="SelectCountry"
+              v-model="country"
                   :items="['Pakistan', 'Canada', 'India', 'America']"
                   outlined
                   required
               ></v-select>
             </v-flex>
-            <v-flex xs12>
+            <!-- <v-flex xs12>
               <v-label>Password</v-label>
               <v-text-field outlined
                             v-model="password"
@@ -83,7 +83,7 @@
                             @click:append="passwordShow = !passwordShow"
                             required
               ></v-text-field>
-            </v-flex>
+            </v-flex> -->
           </v-layout>
         </v-container>
         <small>*indicates required field</small>
@@ -99,24 +99,48 @@
   </v-card>
 </template>
 <script>
-
+import axios from 'axios'
 export default {
   data: () => ({
-    FirstName:'',
-    LastName:'',
+    firstName:'',
+    lastName:'',
     email:'',
-    password:'',
-    ContactNumber:'',
-    Address:'',
-    SelectCity:'',
-    SelectState:'',
-    SelectCode:'',
-    SelectCountry:'',
+    contactNumber:'',
+    address:'',
+    city:'',
+    state:'',
+    zipCode:'',
+    country:'',
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    ],
+    password: '',
+    passwordRules: [
+      v => !!v || 'Password is required',
+      v => (v && v.length >= 6) || 'Password must be 6  characters or more!',
+    ],
     }),
   methods: {
-    submitHandler() {
-      alert(this)
-    },
+    async submitHandler() {
+      // alert(this.city)
+      if (this.$refs.form.validate()){
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/user",{
+          email:this.email,
+          // password: this.password,
+          firstName:this.firstName,
+          lastName:this.lastName,
+          contactNumber:this.contactNumber,
+          address:this.address,
+          city:this.city,
+          state:this.state,
+          zipCode:this.zipCode,
+          country:this.country,
+          operation:'c'
+        });
+        alert(result)
+  }
+}
   }
 }
 

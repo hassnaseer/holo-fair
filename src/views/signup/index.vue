@@ -88,7 +88,7 @@ export default {
           email:this.email,
           password: this.password
         });
-        alert(JSON.stringify(result.data.meta.message))
+        // alert(JSON.stringify(result.data.meta.message))
         let message = JSON.stringify(result.data.meta.message);
  if (result.status === 201){
         setTimeout(()=> {
@@ -100,7 +100,7 @@ export default {
         text: message,
       });
         },1000)
-        // this.$router.push({ path: '/login'})
+        this.$router.push({ path: '/login'})
       }else{
         setTimeout(()=> {
        this.loading = false

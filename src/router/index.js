@@ -15,7 +15,7 @@ let router = new Router({
     {
       path: '/',
       component: Dashboard,
-      redirect: '/login',
+      // redirect: '/login',
       children: [
           {
         path: 'overview',
@@ -136,18 +136,8 @@ let router = new Router({
     },
   ]
 })
-// const token = localStorage.getItem('accesstoken')
+
 // const openRoutes = ['Login', "Signup", token];
-// router.beforeEach((to, from, next)=>{
-//   if(openRoutes.includes(to.name)){
-//     next()
-//   }
-//   else if (openRoutes.includes(to.token)){
-//     next()
-//   }
-//   else {
-//     next('/login')
-//   }
-// })
+
 
 export default router
