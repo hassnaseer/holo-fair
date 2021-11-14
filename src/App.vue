@@ -19,6 +19,7 @@
   </div>
 <v-app>
     <v-content>
+      <notifications group="foo" position="top center" />
       <router-view></router-view>
     </v-content>
   </v-app>

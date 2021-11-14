@@ -62,7 +62,10 @@
       </v-container>
     </v-content>
     <v-snackbar top color="green" v-model="snackbar">
-      Login success
+      Login Successfully
+    </v-snackbar>
+        <v-snackbar top color="green" v-model="snackbarerror">
+      invalid credentials success
     </v-snackbar>
   </v-app>
 </template>
@@ -73,6 +76,7 @@ export default {
   data: () => ({
     loading:false,
     snackbar:false,
+    snackbarerror: false,
     passwordShow:false,
     email: '',
     emailRules: [
@@ -88,20 +92,43 @@ export default {
   methods:{
     async submitHandler(){
       if (this.$refs.form.validate()){
-        this.loading = true
-        let result = await axios.get ("https://holo-fair.herokuapp.com/api/v1/login",{
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/login",{
           email:this.email,
           password: this.password
         });
-        this.snackbar = true
+        let accesstoken = JSON.stringify(result.data.data.token);
+        let user = JSON.stringify(result.data.data.user.id);
+        let message = JSON.stringify(result.data.meta.message);
+        // alert(JSON.stringify(result.data.meta))
       if (result.status === 200){
         setTimeout(()=> {
        this.loading = false
-       this.snackbar = true
-        },500)
+       this.$notify({
+        group: 'foo',
+        type:"success",
+        position:"top left",
+        title: 'Success',
+        text: message,
+      });
+        },1000)
+        localStorage.setItem("token", accesstoken );
+        localStorage.setItem("userid", user );
+        window.isSignedIn = true;
+        // Bus.$emit("loggedIn/");
+        // alert("ok")
         this.$router.push({ path: '/overview'})
       }else{
-        this.$router.push({ path: '/login'})
+      //   setTimeout(()=> {
+      //  this.loading = false
+      //  this.$notify({
+      //   group: 'foo',
+      //   type:"warn",
+      //   position:"top left",
+      //   title: 'Success',
+      //   text: message,
+      // });
+      //   },1000)
+      alert("error")
       }
       
       }

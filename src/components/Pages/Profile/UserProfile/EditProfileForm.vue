@@ -19,11 +19,11 @@
           <v-layout wrap>
             <v-flex xs12 sm6 md6>
               <v-label>First Name</v-label>
-              <v-text-field required outlined></v-text-field>
+              <v-text-field required outlined v-model="FirstName"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md6>
               <v-label>Last Name</v-label>
-              <v-text-field required outlined></v-text-field>
+              <v-text-field required outlined v-model="LastName"></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-label>Email</v-label>
@@ -32,23 +32,25 @@
             </v-flex>
             <v-flex xs12>
               <v-label>Contact Number</v-label>
-              <v-text-field outlined type="number" required></v-text-field>
+              <v-text-field outlined type="number" required v-model="ContactNumber"></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-label>Address</v-label>
-              <v-text-field outlined type="address" required></v-text-field>
+              <v-text-field outlined type="address" required v-model="Address"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6>
               <v-label>City</v-label>
               <v-select
                   :items="['Lahore', 'Canada', 'India', 'America']"
                   outlined
+                  v-model="SelectCity"
                   required
               ></v-select>
             </v-flex>
             <v-flex xs12 sm6>
               <v-label>State</v-label>
               <v-select
+              v-model="SelectState"
                   :items="['Punjab', 'Canada', 'India', 'America']"
                   outlined
                   required
@@ -57,6 +59,7 @@
             <v-flex xs12 sm6>
               <v-label>Zip Code</v-label>
               <v-select
+              v-model="SelectCode"
                   :items="['54000', '51700', '98000', '6100']"
                   outlined
                   required
@@ -65,6 +68,7 @@
             <v-flex xs12 sm6>
               <v-label>Country</v-label>
               <v-select
+              v-model="SelectCountry"
                   :items="['Pakistan', 'Canada', 'India', 'America']"
                   outlined
                   required
@@ -97,29 +101,22 @@
 <script>
 
 export default {
-  components: {
-
-  },
-  data () {
-    return {
-      user: {
-        company: 'Light dashboard',
-        username: 'michael23',
-        email: '',
-        firstName: 'Mike',
-        lastName: 'Andrew',
-        address: 'Melbourne, Australia',
-        city: 'melbourne',
-        country: 'Australia',
-        postalCode: '',
-        aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
-      }
-    }
-  },
+  data: () => ({
+    FirstName:'',
+    LastName:'',
+    email:'',
+    password:'',
+    ContactNumber:'',
+    Address:'',
+    SelectCity:'',
+    SelectState:'',
+    SelectCode:'',
+    SelectCountry:'',
+    }),
   methods: {
-    submitHandler () {
-      alert('Your data: ' + JSON.stringify(this.user))
-    }
+    submitHandler() {
+      alert(this)
+    },
   }
 }
 

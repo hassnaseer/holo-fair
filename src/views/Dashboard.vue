@@ -156,6 +156,18 @@ export default {
     },
     logout(){
       this.$router.push({ path: '/login'})
+      localStorage.removeItem("token");
+      localStorage.removeItem("userid");
+              setTimeout(()=> {
+       this.loading = false
+       this.$notify({
+        group: 'foo',
+        type:"success",
+        position:"top left",
+        title: 'Successful.',
+        text: "User Logout Successfully",
+      });
+        },1000)
     },
     Publishevent(){
       this.$confirm(

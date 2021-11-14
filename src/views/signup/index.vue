@@ -88,15 +88,31 @@ export default {
           email:this.email,
           password: this.password
         });
+        alert(JSON.stringify(result.data.meta.message))
+        let message = JSON.stringify(result.data.meta.message);
+ if (result.status === 201){
         setTimeout(()=> {
-          this.loading = false
-          this.snackbarr = true
-        },5000,
-        // this.$router.push({ path: '/Login'})
-        alert(result)
-        )
-        
-        this.snackbar = true
+       this.loading = false
+       this.$notify({
+        group: 'foo',
+        position:"top left",
+        title: 'Success',
+        text: message,
+      });
+        },1000)
+        // this.$router.push({ path: '/login'})
+      }else{
+        setTimeout(()=> {
+       this.loading = false
+        this.$notify({
+        group: 'foo',
+        type:"warn",
+        position:"top left",
+        title: 'Success',
+        text: "message",
+      });
+        },1000)
+      } 
       }
     },
     login(){
