@@ -45,9 +45,44 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-lg-none"></v-app-bar-nav-icon>
       <v-toolbar-title>{{count}}</v-toolbar-title>
-      <div v-if="this.$route.meta.button">"Division"</div>
-
       <div class="ml-auto">
+        <v-btn
+            class="white--text d-none d-sm-inline-block mr-2"
+            color="light-blue"
+            v-if="this.$route.meta.button"
+             @click="showModal"
+        >
+          Send Announcement
+        </v-btn>
+            <a-modal v-model="visible" title="Text Message" @ok="handleOk" okText="Save">
+              <!-- <div class="mb-2"> -->
+                <a-textarea
+                  v-model="value"
+                  placeholder="Controlled autosize"
+                  :auto-size="{ minRows: 3, maxRows: 5 }"
+                />
+              <!-- </div> -->
+                <v-checkbox
+                          v-model="checkboxloby"
+                          label="To users in lobby"
+                          required
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="checkboxauditorium"
+                          label="to users in auditorium"
+                          required
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="checkboxhall"
+                          label="to users in exhibition hall"
+                          required
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="checkboxroom"
+                          label="to users in meeting room"
+                          required
+                        ></v-checkbox>
+          </a-modal>
         <v-btn
             class="white--text d-none d-sm-inline-block"
             color="light-blue"
@@ -115,6 +150,12 @@ export default {
   data: () => ({
     loading:false,
     snackbar:false,
+    value:'',
+    checkboxroom:'',
+    checkboxhall:'',
+    checkboxloby:'',
+    checkboxauditorium:'',
+    visible: false,
     drawer: true,
     items: [
       {
@@ -169,7 +210,13 @@ export default {
     }
   },
   methods:{
-    
+     showModal() {
+      this.visible = true;
+    },
+    handleOk(){
+      alert(this.value)
+      this.visible = false;
+    },
     loader(){   
       alert('data here')
     },
@@ -220,5 +267,8 @@ export default {
 <style>
 .img{
   width: 200px;
+}
+.v-list-item__title{
+  margin-left: 20px !important;
 }
 </style>

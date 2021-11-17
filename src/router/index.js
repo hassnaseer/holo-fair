@@ -15,8 +15,7 @@ let router = new Router({
     {
       path: '/',
       component: Dashboard,
-      meta: { button: false },
-      // redirect: '/login',
+      redirect: '/overview',
       children: [
           {
         path: 'overview',
@@ -40,7 +39,7 @@ let router = new Router({
           path: 'profile',
           name: 'Profile',
           component: () => import('../components/Pages/Profile/userProfile'),
-          meta: { title: 'Profile' }
+          meta: { title: 'Profile'}
         },
         {
           path: 'setup/basic',
@@ -64,49 +63,49 @@ let router = new Router({
           path: 'venues/lobby',
           name: 'Lobby',
           component: () => import('../components/Pages/Venues/Lobby/Lobby'),
-          meta: { title: 'Lobby' },
+          meta: { title: 'Lobby', button: true  },
         },
         {
           path: 'venues/auditorium',
           name: 'Auditorium',
           component: () => import('../components/Pages/Venues/Auditorium/Auditorium'),
-          meta: { title: 'Auditorium' },
+          meta: { title: 'Auditorium', button: true  },
         },
         {
           path: 'venues/exhibitionhall',
           name: 'Exhibition Hall',
           component: () => import('../components/Pages/Venues/ExhibitionHall/exhibitionHall'),
-          meta: { title: 'Exhibition Hall' },
+          meta: { title: 'Exhibition Hall', button: true  },
         },
         {
           path: 'venues/meetingroom',
           name: 'Meeting Room',
           component: () => import('../components/Pages/Venues/MeetingRoom/meetingRoom'),
-          meta: { title: 'Meeting Room' },
+          meta: { title: 'Meeting Room', button: true  },
         },
         {
           path: 'people/attendees',
           name: 'Attendess',
           component: () => import('../components/Pages/People/Attendess/Attendess'),
-          meta: { title: 'Attendess' },
+          meta: { title: 'Attendess', button: true  },
         },
         {
           path: 'marketing/emailattendees',
           name: 'Email Attendees',
           component: () => import('../components/Pages/Marketing/EmailAttendees/emailAttendess'),
-          meta: { title: 'Email Attendees' },
+          meta: { title: 'Email Attendees', button: true  },
         },
         {
           path: 'analytics/liveanalytics',
           name: 'Live Analytics',
           component: () => import('../components/Pages/Analytics/LiveAnalytics/liveAnalytics'),
-          meta: { title: 'Live Analytics' },
+          meta: { title: 'Live Analytics', button: true  },
         },
         {
           path: 'analytics/reports',
           name: 'Reports',
           component: () => import('../components/Pages/Analytics/Reports/Reports'),
-          meta: { title: 'Reports' },
+          meta: { title: 'Reports', button: true},
         }
       ]
     },
