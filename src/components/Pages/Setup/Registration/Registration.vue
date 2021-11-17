@@ -55,6 +55,7 @@
   </v-container>
       </template>
 <script>
+import axios from 'axios'
 export default {
     beforeRouteEnter (to, from, next) {
       const token = localStorage.getItem('token')
@@ -64,19 +65,39 @@ export default {
   else
     next('/login')
   },
-  data: () => ({
+  data () {
+    return {
     checkboxEmail:true,
     checkboxPassword:'',
+    loading:false,
     checkboxName: '',
     checkboxNumber:true,
     checkboxPosition:true,
     checkboxCompany:'',
-    }),
-  methods: {
-    submitHandler() {
-      alert(this.checkboxPassword)
+    };
     },
-  }
+    methods: {
+ async submitHandler () {
+      try{
+        this.loading = true
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/event-registration-fields",{
+          fullName:this.checkboxName,
+          operation: 'C',
+          email: this.checkboxEmail,
+          password:this.checkboxPassword,
+          phoneNumber:this.checkboxNumber,
+          company:this.checkboxCompany,
+          positionAtCompany: this.checkboxPosition
+        });
+        alert("success", result)
+        this.loading = false
+      }catch(e){
+        alert(e)
+        this.loading = false
+      }
+      this.loading = false
+    }
+    },
 }
 </script>
 <style>

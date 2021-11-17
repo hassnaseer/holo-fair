@@ -1,10 +1,11 @@
 <template>
 <v-container fluid>
-  <h2>Upload media content to your lobby below:</h2>
+  <v-form @submit.prevent="submitHandler" ref="form">
+     <h2>Upload media content to your lobby below:</h2>
 <a-upload-dragger
     name="file"
     :multiple="true"
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://holo-fair.herokuapp.com/api/v1/file-upload"
     @change="handleChange"
   >
     <p class="ant-upload-drag-icon">
@@ -26,6 +27,8 @@
           <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
         </v-col>
   </v-row>
+  </v-form>
+
 </v-container>
 </template>
 <script>
@@ -54,6 +57,10 @@ export default {
         this.$message.error(`${info.file.name} file upload failed.`);
       }
     },
+    submitHandler (info) {
+      // alert(JSON.stringify(`${info.file.name}`))
+      alert(info.file.status)
+    }
   },
 };
 </script>

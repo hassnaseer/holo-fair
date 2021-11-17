@@ -8,6 +8,7 @@
               <label>Event Name</label>
               <v-text-field
                   type="input"
+                  v-model="eventName"
                   placeholder="Event Name"
                   outlined
               />
@@ -17,90 +18,29 @@
                 sm="6"
                 md="6"
             >
-              <v-dialog
-                  ref="dialog"
-                  v-model="modal"
-                  :return-value.sync="date"
-                  persistent
-                  width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <Label>Start Date</Label>
-                  <v-text-field
-                      v-model="date"
-                      outlined
-                      placeholder="Start Date"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                    v-model="date"
-                    scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn
-                      text
-                      color="primary"
-                      @click="modal = false"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                      text
-                      color="primary"
-                      @click="$refs.dialog.save(date)"
-                  >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-dialog>
+                  <a-date-picker
+                    v-model="startValue"
+                    :disabled-date="disabledStartDate"
+                    show-time
+                    format="YYYY-MM-DD HH:mm:ss"
+                    placeholder="Start"
+                    @openChange="handleStartOpenChange"
+                  />
             </v-col>
             <v-col
                 cols="6"
                 sm="6"
                 md="6"
             >
-              <v-dialog
-                  ref="dialog"
-                  v-model="modal"
-                  :return-value.sync="date"
-                  persistent
-                  width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <Label>End Date</Label>
-                  <v-text-field
-                      v-model="date"
-                      outlined
-                      placeholder="End Date"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                    v-model="date"
-                    scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn
-                      text
-                      color="primary"
-                      @click="modal = false"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                      text
-                      color="primary"
-                      @click="$refs.dialog.save(date)"
-                  >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-dialog>
+              <a-date-picker
+                v-model="endValue"
+                :disabled-date="disabledEndDate"
+                show-time
+                format="YYYY-MM-DD HH:mm:ss"
+                placeholder="End"
+                :open="endOpen"
+                @openChange="handleEndOpenChange"
+              />
             </v-col>
             <v-col md="12" sm="12">
               <span class="main-text">
@@ -119,6 +59,7 @@
         <v-textarea
           solo
           name="input-7-4"
+          v-model="message"
           label="Solo textarea"
         ></v-textarea>
       </v-col>
@@ -146,6 +87,7 @@
   </v-container>
 </template>
 <script>
+import axios from 'axios'
 export default {
     beforeRouteEnter (to, from, next) {
       const token = localStorage.getItem('token')
@@ -155,20 +97,54 @@ export default {
   else
     next('/login')
   },
-  data: () => ({
-    activePicker: null,
-    date: null,
-    menu: false,
-  }),
-  watch: {
-    menu (val) {
-      val && setTimeout(() => (this.activePicker = 'YEAR'))
-    },
+  data() {
+    return {
+      loading:false,
+      startValue: null,
+      endValue: null,
+      endOpen: false,
+    };
   },
   methods: {
-    save (date) {
-      this.$refs.menu.save(date)
+    disabledStartDate(startValue) {
+      const endValue = this.endValue;
+      if (!startValue || !endValue) {
+        return false;
+      }
+      return startValue.valueOf() > endValue.valueOf();
     },
+    disabledEndDate(endValue) {
+      const startValue = this.startValue;
+      if (!endValue || !startValue) {
+        return false;
+      }
+      return startValue.valueOf() >= endValue.valueOf();
+    },
+    handleStartOpenChange(open) {
+      if (!open) {
+        this.endOpen = true;
+      }
+    },
+    handleEndOpenChange(open) {
+      this.endOpen = open;
+    },
+    async submitHandler () {
+      try{
+        this.loading = true
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/basic-event",{
+          eventName:this.eventName,
+          operation: 'C',
+          startDate: this.startValue,
+          endDate:this.endValue,
+          message:this.message
+        });
+        alert("success", result)
+        this.loading = false
+      }catch(e){
+        alert(e)
+      }
+      alert(this.endValue)
+    }
   },
 }
 </script>
