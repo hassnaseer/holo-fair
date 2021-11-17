@@ -15,6 +15,7 @@ let router = new Router({
     {
       path: '/',
       component: Dashboard,
+      meta: { button: false },
       // redirect: '/login',
       children: [
           {

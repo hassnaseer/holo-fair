@@ -45,6 +45,8 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-lg-none"></v-app-bar-nav-icon>
       <v-toolbar-title>{{count}}</v-toolbar-title>
+      <div v-if="this.$route.meta.button">"Division"</div>
+
       <div class="ml-auto">
         <v-btn
             class="white--text d-none d-sm-inline-block"
@@ -162,9 +164,9 @@ export default {
     count (){
       return JSON.stringify(this.$route.name)
     },
-    // button (){
-    //   return JSON.stringify(this.$route.value)
-    // }
+    button (){
+      return this.$route.meta.button;
+    }
   },
   methods:{
     
