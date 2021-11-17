@@ -23,6 +23,18 @@
                         <h1 class="text-center display-2 light-blue--text text--accent-3 py-4">Create Account</h1>
                         <v-form @submit.prevent="submitSignup" ref="form">
                           <v-card-text>
+                               <v-text-field
+                                v-model="firstName"
+                                type="text"
+                                label="First Name"
+                                placeholder="First Name"
+                            />
+                            <v-text-field
+                                v-model="lastName"
+                                type="text"
+                                label="Last Name"
+                                placeholder="Last Name"
+                            />
                             <v-text-field
                                 v-model="email"
                                 :rules="emailRules"
@@ -70,6 +82,8 @@ export default {
     snackbar:false,
     passwordShow:false,
     email: '',
+    firstName:'',
+    lastName:'',
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -84,35 +98,34 @@ export default {
     async submitSignup(){
       if (this.$refs.form.validate()){
         this.loading = true
+        try{
         let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/signup",{
           email:this.email,
-          password: this.password
+          password: this.password,
+          firstName:this.firstName,
+          lastname:this.lastName
         });
-        // alert(JSON.stringify(result.data.meta.message))
         let message = JSON.stringify(result.data.meta.message);
- if (result.status === 201){
-        setTimeout(()=> {
+          setTimeout(()=> {
        this.loading = false
        this.$notify({
         group: 'foo',
         position:"top left",
         title: 'Success',
+        type:"success",
         text: message,
       });
         },1000)
         this.$router.push({ path: '/login'})
-      }else{
-        setTimeout(()=> {
-       this.loading = false
-        this.$notify({
+        } catch (e){
+          let message = JSON.stringify(e.response.data.meta.message);
+          this.$notify({
         group: 'foo',
-        type:"warn",
-        position:"top left",
+        type:"error",
         title: 'Success',
-        text: "message",
+        text: message,
       });
-        },1000)
-      } 
+        } 
       }
     },
     login(){

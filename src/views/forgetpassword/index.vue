@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data: () => ({
     loading:false,
@@ -62,15 +63,33 @@ export default {
     ],
   }),
   methods:{
-    submitForget(){
+   async submitForget(){
       if (this.$refs.form.validate()){
-        this.loading = true
+        try{
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/forget-password",{
+          email:this.email,
+          password: this.password
+        });
+        let message = JSON.stringify(result.data.meta.message);
         setTimeout(()=> {
-          this.loading = false
-          this.snackbar = true
-        },5000)
-        this.snackbar = true
-        this.$router.push({ path: '/Login'})
+        this.loading = false
+        this.$notify({
+        group: 'foo',
+        type:"success",
+        title: 'Success',
+        text: message,
+      });
+        },1000)
+        this.$router.push({ path: '/login'})
+        }catch(e){
+          let message = JSON.stringify(e.response.data.meta.message);
+          this.$notify({
+        group: 'foo',
+        type:"error",
+        title: 'Success',
+        text: message,
+      });
+        }
       }
     },
     login () {

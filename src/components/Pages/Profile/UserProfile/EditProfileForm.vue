@@ -74,7 +74,7 @@
                   required
               ></v-select>
             </v-flex>
-            <!-- <v-flex xs12>
+            <v-flex xs12>
               <v-label>Password</v-label>
               <v-text-field outlined
                             v-model="password"
@@ -83,7 +83,7 @@
                             @click:append="passwordShow = !passwordShow"
                             required
               ></v-text-field>
-            </v-flex> -->
+            </v-flex>
           </v-layout>
         </v-container>
         <small>*indicates required field</small>
@@ -127,7 +127,7 @@ export default {
       if (this.$refs.form.validate()){
         let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/user",{
           email:this.email,
-          // password: this.password,
+          password: this.password,
           firstName:this.firstName,
           lastName:this.lastName,
           contactNumber:this.contactNumber,

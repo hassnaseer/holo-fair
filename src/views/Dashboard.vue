@@ -86,6 +86,10 @@
           cols="12"
       >
         <strong>Copyrights © 2021 Outreal XR, UAE. All rights reserved.</strong>
+        <div v-if="value >3 ">
+          <h1>hassam here</h1>
+        </div>
+        <div v-else></div>
       </v-col>
     </v-footer>
     <v-snackbar top color="green" v-model="snackbar">
@@ -94,6 +98,9 @@
   </div>
 </template>
 <script>
+
+// let value = JSON.stringify(this.$route.value);
+
 export default {
     beforeRouteEnter (to, from, next) {
       const token = localStorage.getItem('token')
@@ -154,7 +161,10 @@ export default {
   computed:  {
     count (){
       return JSON.stringify(this.$route.name)
-    }
+    },
+    // button (){
+    //   return JSON.stringify(this.$route.value)
+    // }
   },
   methods:{
     
