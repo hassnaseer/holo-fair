@@ -7,14 +7,28 @@
       <v-card-text>
         <v-container grid-list-md>
           <v-row>
-            <v-avatar class="mx-auto" size="100"
-            >
-              <img
-                  src="https://cdn.vuetifyjs.com/images/john.jpg"
-                  alt="John"
-                  class="mb-12"
-              >
-            </v-avatar>
+            <v-col cols="12">
+              <div class="mx-auto text-center">
+                
+                 <a-upload
+                  name="avatar"
+                  class="avatar-uploader"
+                  :show-upload-list="false"
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  :before-upload="beforeUpload"
+                  @change="handleChange"
+                >
+                  <img v-if="imageUrl" :src="imageUrl" alt="avatar" class="img-avatar"/>
+                  <div v-else class="mt-6">
+                    <a-icon :type="loading ? 'loading' : 'plus'" />
+                    <div class="ant-upload-text">
+                      Upload
+                    </div>
+                  </div>
+                </a-upload>
+              </div>
+            </v-col>
+
           </v-row>
           <v-layout wrap>
             <v-flex xs12 sm6 md6>
@@ -99,10 +113,18 @@
   </v-card>
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
 export default {
+
   data: () => ({
     firstName:'',
+          loading: false,
+      imageUrl: '',
     lastName:'',
     email:'',
     contactNumber:'',
@@ -122,6 +144,31 @@ export default {
     ],
     }),
   methods: {
+        handleChange(info) {
+      if (info.file.status === 'uploading') {
+        this.loading = true;
+        return;
+      }
+      if (info.file.status === 'done') {
+        // Get this url from response in real world.
+        getBase64(info.file.originFileObj, imageUrl => {
+          this.imageUrl = imageUrl;
+          this.loading = false;
+        });
+      }
+    },
+    beforeUpload(file) {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        this.$message.error('You can only upload JPG file!');
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('Image must smaller than 2MB!');
+      }
+      return isJpgOrPng && isLt2M;
+    },
+  },
     async submitHandler() {
       // alert(this.city)
       if (this.$refs.form.validate()){
@@ -134,6 +181,7 @@ export default {
           address:this.address,
           city:this.city,
           state:this.state,
+          imageUrl:this.profileImage,
           zipCode:this.zipCode,
           country:this.country,
           operation:'c'
@@ -142,9 +190,31 @@ export default {
   }
 }
   }
-}
 
 </script>
 <style>
+.ant-upload-picture-card-wrapper{
+  zoom: 1;
+  display: inline-block;
+}
+.avatar-uploader > .ant-upload {
+  width: 100px;
+  height: 100px;
+  border: 1px dashed;
+  border-radius: 50px;
+}
+.img-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
 
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
 </style>
