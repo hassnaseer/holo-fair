@@ -9,9 +9,9 @@
           <v-row>
             <v-col cols="12">
               <div class="mx-auto text-center">
-                
                  <a-upload
                   name="avatar"
+                  v-model="imageUrl"
                   class="avatar-uploader"
                   :show-upload-list="false"
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -144,6 +144,26 @@ export default {
     ],
     }),
   methods: {
+        async submitHandler() {
+      alert(this.city)
+      if (this.$refs.form.validate()){
+        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/user",{
+          email:this.email,
+          password: this.password,
+          firstName:this.firstName,
+          lastName:this.lastName,
+          contactNumber:this.contactNumber,
+          address:this.address,
+          city:this.city,
+          state:this.state,
+          imageUrl:this.profileImage,
+          zipCode:this.zipCode,
+          country:this.country,
+          operation:'c'
+        });
+        alert(result)
+  }
+},
         handleChange(info) {
       if (info.file.status === 'uploading') {
         this.loading = true;
@@ -169,26 +189,7 @@ export default {
       return isJpgOrPng && isLt2M;
     },
   },
-    async submitHandler() {
-      // alert(this.city)
-      if (this.$refs.form.validate()){
-        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/user",{
-          email:this.email,
-          password: this.password,
-          firstName:this.firstName,
-          lastName:this.lastName,
-          contactNumber:this.contactNumber,
-          address:this.address,
-          city:this.city,
-          state:this.state,
-          imageUrl:this.profileImage,
-          zipCode:this.zipCode,
-          country:this.country,
-          operation:'c'
-        });
-        alert(result)
-  }
-}
+
   }
 
 </script>
