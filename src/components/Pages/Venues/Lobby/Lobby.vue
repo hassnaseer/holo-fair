@@ -59,24 +59,25 @@ export default {
       loading: false,
     };
   },
-  methods: {
-    async mounted() {
-      try {
-        const response = await axios.get(
-            "https://holo-fair.herokuapp.com/api/v1/venue/3"
-        );
-        alert(JSON.stringify(response.data))
-       // this.fileList = response.data;
-        // let data = this.tables.map((item)=>{
-        //   return item
-        // })
-        // alert(JSON.stringify(this.tables.template_params))
-        // alert(JSON.stringify(data.template_params))
-      } catch (error) {
+  async mounted() {
+    try {
+      alert("Mounting...");
+      const response = await axios.get(
+          "https://holo-fair.herokuapp.com/api/v1/venue/3"
+      );
+      alert(JSON.stringify(response.data))
+      // this.fileList = response.data;
+      // let data = this.tables.map((item)=>{
+      //   return item
+      // })
+      // alert(JSON.stringify(this.tables.template_params))
+      // alert(JSON.stringify(data.template_params))
+    } catch (error) {
       alert(error)
-      }
+    }
 
-    },
+  },
+  methods: {
     handleRemove(file) {
       const index = this.fileList.indexOf(file);
       const newFileList = this.fileList.slice();
