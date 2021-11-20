@@ -111,6 +111,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     valid: false,
@@ -134,6 +136,19 @@ export default {
       v => (v && v.length >= 6) || 'Password must be 6  characters or more!',
     ],
   }),
+  async getEmails() {
+    try {
+      const response = await axios.get(
+          "https://holo-fair.herokuapp.com/api/v1/user/1"
+      );
+      this.data = response.data.data;
+    } catch (error) {
+      alert(error);
+    }
+  },
+  mounted() {
+    this.getEmails()
+  },
   methods: {
     submitHandler() {
       this.dialog = false
