@@ -5,7 +5,7 @@
       <img src="../../public/HoloFair-by-Outreal-XR-Logo.png" alt="" class="img pt-2 pl-5">
       <v-list class="pa-2">
         <v-list-item to="/overview" link active-class="bg-active">
-          <v-list-item-title>OverView</v-list-item-title>
+          <v-list-item-title class="overview">OverView</v-list-item-title>
         </v-list-item>
         <v-list-group
             v-for="item in items"
@@ -265,10 +265,13 @@ export default {
 }
 </script>
 <style>
+.overview{
+  margin-left: 0px !important;
+}
 .img{
   width: 200px;
 }
 .v-list-item__title{
-  margin-left: 20px !important;
+  margin-left: 20px;
 }
 </style>
