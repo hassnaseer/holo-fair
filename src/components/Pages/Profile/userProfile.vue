@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <edit-profile-form>
+          <edit-profile-form userData="data">
           </edit-profile-form>
         </div>
         <div class="col-md-4">
@@ -27,28 +27,31 @@ export default {
     } else
       next('/login')
   },
-  data() {
-    return {
-      data: {},
-    }
-  },
-  async getEmails() {
-    try {
-      const response = await axios.get(
-          "https://holo-fair.herokuapp.com/api/v1/user/1"
-      );
-      this.data = response.data.data;
-    } catch (error) {
-      alert(error);
-    }
-  },
   mounted() {
     this.getEmails()
+  },
+  methods: {
+    async getEmails() {
+      try {
+        const id = localStorage.getItem("userid");
+        const response = await axios.get(
+            `https://holo-fair.herokuapp.com/api/v1/user/${id}`
+        );
+        this.userData = response.data.data;
+      } catch (error) {
+        alert(error);
+      }
+    },
   },
   components: {
     EditProfileForm,
     UserCard
-  }
+  },
+  data() {
+    return {
+      userData: {},
+    }
+  },
 }
 
 </script>

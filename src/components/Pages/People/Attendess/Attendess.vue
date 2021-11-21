@@ -269,7 +269,7 @@ export default {
           });
           alert(res.data.meta.message)
         } else {
-          let res = await axios.post("https://holo-fair.herokuapp.com/api/v1/user", {
+          let res = await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
             ...this.editedItem, operation: "E"
           });
           alert(res.data.meta.message)

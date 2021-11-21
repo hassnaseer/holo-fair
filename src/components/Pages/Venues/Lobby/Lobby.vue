@@ -66,12 +66,6 @@ export default {
           "https://holo-fair.herokuapp.com/api/v1/venue/3"
       );
       alert(JSON.stringify(response.data))
-      // this.fileList = response.data;
-      // let data = this.tables.map((item)=>{
-      //   return item
-      // })
-      // alert(JSON.stringify(this.tables.template_params))
-      // alert(JSON.stringify(data.template_params))
     } catch (error) {
       alert(error)
     }

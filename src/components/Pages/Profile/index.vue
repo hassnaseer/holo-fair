@@ -116,10 +116,10 @@ import axios from "axios";
 export default {
   data: () => ({
     valid: false,
-    dialog:false,
+    dialog: false,
     firstname: '',
-    passwordShow:false,
-    loading:false,
+    passwordShow: false,
+    loading: false,
     lastname: '',
     nameRules: [
       v => !!v || 'Name is required',
@@ -136,29 +136,40 @@ export default {
       v => (v && v.length >= 6) || 'Password must be 6  characters or more!',
     ],
   }),
-  async getEmails() {
-    try {
-      const response = await axios.get(
-          "https://holo-fair.herokuapp.com/api/v1/user/1"
-      );
-      this.data = response.data.data;
-    } catch (error) {
-      alert(error);
-    }
-  },
-  mounted() {
-    this.getEmails()
-  },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       this.dialog = false
       alert('profile submit')
+      const id = localStorage.getItem("userid");
+      const formData = new FormData();
+      //formData.append('profileImage', file);
+      formData.append('operation', "E");
+      formData.append('id', id);
+      formData.append('firstName', 'Hami');
+      formData.append('lastName', 'Shah');
+      formData.append('ciy', 'Lahore');
+      formData.append('country', 'Pakistan');
+      formData.append('state', 'Punjab');
+      this.loading = true
+      const res = await axios({
+        url: `https://holo-fair.herokuapp.com/api/v1/user/${id}`,
+        method: 'post',
+        processData: false,
+        data: formData,
+      });
+      alert(JSON.stringify(res));
+      if (res.data.success) {
+        this.$message.success('Updated successfully.');
+      } else {
+        this.loading = false
+        this.$message.error('Updation failed.');
+      }
     },
-  }
+  },
 }
 </script>
 <style>
-.v-text-field--outlined > .v-input__control > .v-input__slot{
+.v-text-field--outlined > .v-input__control > .v-input__slot {
   min-height: 45px;
 }
 </style>
