@@ -80,7 +80,7 @@ export default {
  async submitHandler () {
       try{
         this.loading = true
-        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/event-registration-fields",{
+        await axios.post ("https://holo-fair.herokuapp.com/api/v1/event-registration-fields",{
           fullName:this.checkboxName,
           operation: 'C',
           email: this.checkboxEmail,
@@ -89,13 +89,26 @@ export default {
           company:this.checkboxCompany,
           positionAtCompany: this.checkboxPosition
         });
-        alert("success", result)
-        this.loading = false
+       setTimeout(()=> {
+       this.loading = false
+       this.$notify({
+        group: 'foo',
+        type:"success",
+        position:"top left",
+        title: 'Successful.',
+        text: "Form Fill success full:)",
+      });
+        },1000)
+        this.$router.push({ path: '/setup/attendeesroles'})
       }catch(e){
-        alert(e)
-        this.loading = false
+          let message = JSON.stringify(e.response.data.meta.message);
+          this.$notify({
+            group: 'foo',
+            type:"error",
+            title: 'Success',
+            text: message,
+      });
       }
-      this.loading = false
     }
     },
 }

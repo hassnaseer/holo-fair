@@ -264,15 +264,15 @@ export default {
       try {
         alert(JSON.stringify(this.formTitle));
         if (this.formTitle === "New User") {
-          let res = await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
+          await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
             ...this.editedItem, operation: "C"
           });
-          alert(res.data.meta.message)
+          // alert(res.data.meta.message)
         } else {
-          let res = await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
+           await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
             ...this.editedItem, operation: "E"
           });
-          alert(res.data.meta.message)
+         // alert(res.data.meta.message)
         }
         if (this.editedIndex > -1) {
           Object.assign(this.data[this.editedIndex], this.editedItem)
