@@ -147,7 +147,7 @@ export default {
       this.visible = false;
     },
     async sendEmail() {
-      await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-email", {
+      await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-email`, {
         operation: "C",
         to: this.email,
         message: this.message,
@@ -160,7 +160,7 @@ export default {
     async getEmails() {
       try {
         const response = await axios.get(
-            "https://holo-fair.herokuapp.com/api/v1/attendee-emails"
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-emails`
         );
         this.tables = response.data.data;
         this.data = response.data.data;

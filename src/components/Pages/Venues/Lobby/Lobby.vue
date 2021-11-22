@@ -6,7 +6,9 @@
           name="file"
           :multiple="true"
           action="https://holo-fair.herokuapp.com/api/v1/file-upload"
+          :file-list="fileList"
           :default-file-list="fileList"
+
           list-type="picture"
           :remove="handleRemove"
           :beforeUpload="beforeUpload"
@@ -33,7 +35,7 @@
                  :disabled="fileList.length === 0"
                  :loading="loading"
                  color="light-blue darken-2 px-8"
-                 >{{ loading ? 'Uploading' : 'Upload' }}
+          >{{ loading ? 'Uploading' : 'Upload' }}
           </v-btn>
         </v-col>
       </v-row>
@@ -44,6 +46,7 @@
 <script>
 // import { Icon } from 'ant-design-vue';
 import axios from "axios";
+import {v4 as uuidv4} from 'uuid';
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -61,11 +64,21 @@ export default {
   },
   async mounted() {
     try {
-      alert("Mounting...");
+      const eventId = localStorage.getItem("eventId");
       const response = await axios.get(
-          "https://holo-fair.herokuapp.com/api/v1/venue/3"
+          `${process.env.VUE_APP_SERVER_URL}/api/v1/venue/${eventId}`
       );
-      alert(JSON.stringify(response.data))
+      if (response.data && response.data.data && response.data.data.lobbyContent) {
+        let files = response.data.data.lobbyContent.map(item => {
+          return {
+            uid: uuidv4(),
+            url: item,
+            name:"xxx.jpg",
+            status: 'done',
+          }
+        });
+        this.fileList = files ? files : []
+      }
     } catch (error) {
       alert(error)
     }
@@ -93,16 +106,17 @@ export default {
       return false;
     },
     async handleUpload() {
+      const eventId = localStorage.getItem("eventId");
       const {fileList} = this;
       const formData = new FormData();
       fileList.forEach((file) => {
         formData.append('file', file);
-        formData.append('eventId', 3);
+        formData.append('eventId', eventId);
         formData.append('venue', 'lobby');
       });
       this.loading = true
-    const res =  await axios({
-        url: 'https://holo-fair.herokuapp.com/api/v1/file-upload',
+      const res = await axios({
+        url: `${process.env.VUE_APP_SERVER_URL}/api/v1/file-upload`,
         method: 'post',
         processData: false,
         data: formData,
@@ -117,12 +131,11 @@ export default {
         },
       });
       alert(JSON.stringify(res));
-      if(res.data.success){
+      if (res.data.success) {
         this.fileList = []
         this.loading = false
         this.$message.success('upload successfully.');
-      }
-      else{
+      } else {
         this.loading = false
         this.$message.error('upload failed.');
       }

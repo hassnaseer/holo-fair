@@ -93,13 +93,12 @@ export default {
     async submitHandler(){
       if (this.$refs.form.validate()){
         try{
-        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/login",{
+        let result = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/login`,{
           email:this.email,
           password: this.password
         });
         if(result.data.meta.status === 203){
           let message = JSON.stringify(result.data.meta.message);
-          // alert("mismatch credentials")
         setTimeout(()=> {
         this.loading = false
         this.$notify({

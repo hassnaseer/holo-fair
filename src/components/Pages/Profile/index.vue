@@ -152,7 +152,7 @@ export default {
       formData.append('state', 'Punjab');
       this.loading = true
       const res = await axios({
-        url: `https://holo-fair.herokuapp.com/api/v1/user/${id}`,
+        url: `${process.env.VUE_APP_SERVER_URL}/api/v1/user/${id}`,
         method: 'post',
         processData: false,
         data: formData,

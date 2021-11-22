@@ -66,7 +66,7 @@ export default {
    async submitForget(){
       if (this.$refs.form.validate()){
         try{
-        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/forget-password",{
+        let result = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/forget-password`,{
           email:this.email,
           password: this.password
         });
@@ -81,6 +81,7 @@ export default {
       });
         },1000)
         this.$router.push({ path: '/login'})
+           localStorage.setItem("emailId",this.email);
         }catch(e){
           let message = JSON.stringify(e.response.data.meta.message);
           this.$notify({

@@ -35,7 +35,7 @@ export default {
       try {
         const id = localStorage.getItem("userid");
         const response = await axios.get(
-            `https://holo-fair.herokuapp.com/api/v1/user/${id}`
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/user/${id}`
         );
         this.userData = response.data.data;
       } catch (error) {

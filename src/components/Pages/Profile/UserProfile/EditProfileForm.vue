@@ -147,7 +147,7 @@ export default {
         async submitHandler() {
       alert(this.city)
       if (this.$refs.form.validate()){
-        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/user",{
+        let result = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/user`,{
           email:this.email,
           password: this.password,
           firstName:this.firstName,
