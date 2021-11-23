@@ -77,7 +77,7 @@
     </v-checkbox>
       </v-col>
       <v-col cols="6">
-        <img v-if="checkbox === true" src="/assets/logo.png">
+        <img v-if="checkbox === true" src="https://cdn.vuetifyjs.com/images/john.jpg">
       </v-col>
           <v-col cols="5" class="float-right">
           <v-btn :loading="loading" @click="submitHandler()" color="light-blue darken-2 px-8" dark>Publish</v-btn>
@@ -145,7 +145,7 @@ export default {
     async submitHandler () {
       try{
         this.loading = true
-        await axios.post ("https://holo-fair.herokuapp.com/api/v1/basic-event",{
+        let res = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/basic-event`,{
           eventName:this.eventName,
           operation: 'C',
           startDate: this.startValue,
@@ -153,6 +153,7 @@ export default {
           message:this.message,
           checkbox:this.checkbox,
         });
+        localStorage.setItem("eventId",res.data.data.id)
        setTimeout(()=> {
        this.loading = false
        this.$notify({

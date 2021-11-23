@@ -203,7 +203,7 @@ export default {
   }),
   computed:  {
     count (){
-      return JSON.stringify(this.$route.name)
+      return this.$route.name
     },
     button (){
       return this.$route.meta.button;

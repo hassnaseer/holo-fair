@@ -201,7 +201,7 @@ export default {
     async getAttendees() {
       try {
         const response = await axios.get(
-            "https://holo-fair.herokuapp.com/api/v1/attendees"
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendees`
         );
         this.data = response.data.data;
       } catch (error) {
@@ -264,15 +264,14 @@ export default {
       try {
         alert(JSON.stringify(this.formTitle));
         if (this.formTitle === "New User") {
-          await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
+          await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-people`, {
             ...this.editedItem, operation: "C"
           });
           // alert(res.data.meta.message)
         } else {
-           await axios.post("https://holo-fair.herokuapp.com/api/v1/attendee-people", {
+           await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-people`, {
             ...this.editedItem, operation: "E"
           });
-         // alert(res.data.meta.message)
         }
         if (this.editedIndex > -1) {
           Object.assign(this.data[this.editedIndex], this.editedItem)

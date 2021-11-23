@@ -4,7 +4,7 @@ import Dashboard from '../views/Dashboard'
 import Login from '../views/Login/index'
 import Signup from '../views/signup/index'
 import Reset from '../views/resetpassword'
-import Forgetpassword from '../views/forgetpassword/index'
+import ForgetPassword from '../views/forgetpassword/index'
 import OverView from '../components/Pages/OverView/overView'
 
 Vue.use(Router)
@@ -116,8 +116,8 @@ let router = new Router({
     },
     {
       path: '/forgetpassword',
-      name: 'Forgetpassword',
-      component: Forgetpassword
+      name: 'ForgetPassword',
+      component: ForgetPassword
     },
     {
       path: '/signup',
@@ -125,8 +125,8 @@ let router = new Router({
       component: Signup
     },
     {
-      path: '/resetpassword',
-      name: 'Reset',
+      path: '/reset-password/:token',
+      name: 'Reset Password',
       component: Reset
     },
     {

@@ -99,7 +99,7 @@ export default {
       if (this.$refs.form.validate()){
         this.loading = true
         try{
-        let result = await axios.post ("https://holo-fair.herokuapp.com/api/v1/signup",{
+        let result = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/signup`,{
           email:this.email,
           password: this.password,
           firstName:this.firstName,

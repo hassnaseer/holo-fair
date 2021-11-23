@@ -14,6 +14,7 @@
                     <v-card-text>
                       <v-checkbox
                           v-model="checkboxEmail"
+                          :disabled="true"
                           label="Email"
                           required
                         ></v-checkbox>
@@ -30,6 +31,7 @@
                         <v-checkbox
                           v-model="checkboxNumber"
                           label="Phone Number"
+                          :disabled="true"
                           required
                         ></v-checkbox>
                         <v-checkbox
@@ -40,6 +42,7 @@
                         <v-checkbox
                           v-model="checkboxPosition"
                           label="Position At Company"
+                          :disabled="true"
                           required
                         ></v-checkbox>
                     </v-card-text>
@@ -80,7 +83,7 @@ export default {
  async submitHandler () {
       try{
         this.loading = true
-        await axios.post ("https://holo-fair.herokuapp.com/api/v1/event-registration-fields",{
+        await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/event-registration-fields`,{
           fullName:this.checkboxName,
           operation: 'C',
           email: this.checkboxEmail,
