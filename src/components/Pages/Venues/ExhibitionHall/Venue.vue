@@ -55,7 +55,7 @@ export default {
     handleChange(info) {
       const status = info.file.status;
       if (status !== 'uploading') {
-        alert(info.file, info.fileList);
+        // alert(info.file, info.fileList);
       }
       if (status === 'done') {
         this.$message.success(`${info.file.name} file uploaded successfully.`);

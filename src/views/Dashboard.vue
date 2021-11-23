@@ -214,11 +214,9 @@ export default {
       this.visible = true;
     },
     handleOk(){
-      alert(this.value)
       this.visible = false;
     },
     loader(){   
-      alert('data here')
     },
     logout(){
       this.$router.push({ path: '/login'})
