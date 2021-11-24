@@ -6,9 +6,7 @@
           name="file"
           :multiple="true"
           action="https://holo-fair.herokuapp.com/api/v1/file-upload"
-          :file-list="fileList"
           :default-file-list="fileList"
-
           list-type="picture"
           :remove="handleRemove"
           :beforeUpload="beforeUpload"
@@ -34,6 +32,7 @@
                  @click="handleUpload"
                  :disabled="fileList.length === 0"
                  :loading="loading"
+                 dark
                  color="light-blue darken-2 px-8"
           >{{ loading ? 'Uploading' : 'Upload' }}
           </v-btn>

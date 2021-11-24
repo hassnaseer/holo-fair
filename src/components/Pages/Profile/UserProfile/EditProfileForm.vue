@@ -9,18 +9,18 @@
           <v-row>
             <v-col cols="12">
               <div class="mx-auto text-center">
-                 <a-upload
-                  name="avatar"
-                  v-model="imageUrl"
-                  class="avatar-uploader"
-                  :show-upload-list="false"
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  :before-upload="beforeUpload"
-                  @change="handleChange"
+                <a-upload
+                    name="profileImage"
+                    v-model="imageUrl"
+                    class="avatar-uploader"
+                    :show-upload-list="false"
+                    :customRequest="uploadFile"
+                    :before-upload="beforeUpload"
+                    @change="handleChange"
                 >
                   <img v-if="imageUrl" :src="imageUrl" alt="avatar" class="img-avatar"/>
                   <div v-else class="mt-6">
-                    <a-icon :type="loading ? 'loading' : 'plus'" />
+                    <a-icon :type="loading ? 'loading' : 'plus'"/>
                     <div class="ant-upload-text">
                       Upload
                     </div>
@@ -64,7 +64,7 @@
             <v-flex xs12 sm6>
               <v-label>State</v-label>
               <v-select
-              v-model="State"
+                  v-model="State"
                   :items="['Punjab', 'Canada', 'India', 'America']"
                   outlined
                   required
@@ -73,7 +73,7 @@
             <v-flex xs12 sm6>
               <v-label>Zip Code</v-label>
               <v-select
-              v-model="zipCode"
+                  v-model="zipCode"
                   :items="['54000', '51700', '98000', '6100']"
                   outlined
                   required
@@ -82,7 +82,7 @@
             <v-flex xs12 sm6>
               <v-label>Country</v-label>
               <v-select
-              v-model="country"
+                  v-model="country"
                   :items="['Pakistan', 'Canada', 'India', 'America']"
                   outlined
                   required
@@ -105,7 +105,8 @@
       <v-card-actions>
         <v-row>
           <v-col cols="12">
-            <v-btn type="submit" color="light-blue darken-2 px-8" class="p-2 mr-5 float-right" dark>Update Profile</v-btn>
+            <v-btn type="submit" color="light-blue darken-2 px-8" class="p-2 mr-5 float-right" dark>Update Profile
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-actions>
@@ -114,25 +115,34 @@
 </template>
 <script>
 import axios from 'axios';
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
-export default {
 
+// function getBase64(img, callback) {
+//   const reader = new FileReader();
+//   reader.addEventListener('load', () => callback(reader.result));
+//   reader.readAsDataURL(img);
+// }
+
+export default {
+  props: ['user'],
+   mounted() {
+    this.firstName  = this.user.firstName;
+    this.lastName = this.user.lastName;
+    this.email =this.user.email;
+    this.imageUrl = this.user.imageUrl;
+     alert(JSON.stringify(this.user));
+   },
   data: () => ({
-    firstName:'',
-          loading: false,
-      imageUrl: '',
-    lastName:'',
-    email:'',
-    contactNumber:'',
-    address:'',
-    city:'',
-    state:'',
-    zipCode:'',
-    country:'',
+    firstName: '',
+    loading: false,
+    imageUrl: '',
+    lastName: '',
+    email: '',
+    contactNumber: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -142,73 +152,110 @@ export default {
       v => !!v || 'Password is required',
       v => (v && v.length >= 6) || 'Password must be 6  characters or more!',
     ],
-    }),
+  }),
   methods: {
-        async submitHandler() {
-      alert(this.city)
-      if (this.$refs.form.validate()){
-        let result = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/user`,{
-          email:this.email,
-          password: this.password,
-          firstName:this.firstName,
-          lastName:this.lastName,
-          contactNumber:this.contactNumber,
-          address:this.address,
-          city:this.city,
-          state:this.state,
-          imageUrl:this.profileImage,
-          zipCode:this.zipCode,
-          country:this.country,
-          operation:'c'
-        });
-        alert(result)
-  }
-},
-        handleChange(info) {
+    uploadFile({onSuccess, onError, file}) {
+      this.upload(file)
+          .then((res) => {
+            onSuccess(null, res);
+          })
+          .catch((err) => {
+            onError(null, file);
+            alert(err);
+          });
+    },
+    async upload(file) {
+      const formData = new FormData();
+      formData.append('profileImage', file);
+      const id = localStorage.getItem("userid");
+      let res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/profile-image/${id}`, formData);
+      alert(JSON.stringify(res.data.data));
+      this.imageUrl = res.data.data;
+    },
+    async submitHandler() {
+      if (this.$refs.form.validate()) {
+        const formData = new FormData();
+        formData.append('operation', "E");
+        formData.append('id', localStorage.getItem('userid'));
+        formData.append('firstName', this.firstName);
+        formData.append('email', this.email);
+        formData.append('password', this.password);
+        formData.append('lastName', this.lastName);
+        formData.append('ciy', this.city);
+        formData.append('country', this.country);
+        formData.append('state', this.state);
+        formData.append('contactNumber', this.contactNumber);
+        formData.append('zipCode', this.zipCode);
+        formData.append('address', this.address);
+        let result = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/user`, formData);
+        let message = JSON.stringify(result.data.meta.message);
+        setTimeout(() => {
+          this.loading = false
+          this.$notify({
+            group: 'foo',
+            position: "top left",
+            title: 'Success',
+            type: "success",
+            text: message,
+          });
+        }, 1000)
+      }
+    },
+    handleChange(info) {
       if (info.file.status === 'uploading') {
         this.loading = true;
-        return;
       }
       if (info.file.status === 'done') {
+        // alert(JSON.stringify(info.file));
+        // const id = localStorage.getItem("userid");
+        // const res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/profile-image/${id}`,info.file)
         // Get this url from response in real world.
-        getBase64(info.file.originFileObj, imageUrl => {
-          this.imageUrl = imageUrl;
-          this.loading = false;
-        });
+        //alert(JSON.stringify(res));
+        // getBase64(info.file.originFileObj, imageUrl => {
+        //   this.imageUrl = imageUrl;
+        //   this.loading = false;
+        // });
+      }
+      if (info.file.status === "error") {
+        this.loading = false;
       }
     },
     beforeUpload(file) {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
         this.$message.error('You can only upload JPG file!');
+        return isJpgOrPng;
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         this.$message.error('Image must smaller than 2MB!');
+        return isLt2M;
       }
-      return isJpgOrPng && isLt2M;
     },
   },
 
-  }
+}
 
 </script>
 <style>
-.ant-upload-picture-card-wrapper{
+.ant-upload-picture-card-wrapper {
   zoom: 1;
   display: inline-block;
 }
+
 .avatar-uploader > .ant-upload {
   width: 100px;
   height: 100px;
   border: 1px dashed;
   border-radius: 50px;
 }
+
 .img-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50px;
 }
+
 .ant-upload-select-picture-card i {
   font-size: 32px;
   color: #999;

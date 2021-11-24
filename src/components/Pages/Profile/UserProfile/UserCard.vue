@@ -8,34 +8,34 @@
         <v-avatar class="mx-auto" size="100"
         >
           <img
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
+              :src="this.user.imageUrl"
+              alt="No Image"
           >
         </v-avatar>
       </v-row>
       <v-container fluid>
         <v-row>
-          <span class="col-12 pb-0 text-center">Name: Malik Hassam</span>
-          <span class="col-12 pb-0 text-center">Email: Hassam@gmail.com</span>
-          <span class="col-12 pb-0 text-center">Address: Dummy Road House 123 City</span>
+          <span class="col-12 pb-0 text-center">Name: {{ this.user.firstName + " " + this.user.lastName }}</span>
+          <span class="col-12 pb-0 text-center">Email: {{ this.user.email }}</span>
+          <span v-if="this.user.address" class="col-12 pb-0 text-center">Address: {{ this.user.address }}</span>
         </v-row>
       </v-container>
     </v-card-content>
-<!--    <input type="file" accept="image/*" @change="onChange" />-->
-<!--    <div id="preview">-->
-<!--      <img v-if="items.imageUrl" :src="items.imageUrl" />-->
-<!--    </div>-->
+    <!--    <input type="file" accept="image/*" @change="onChange" />-->
+    <!--    <div id="preview">-->
+    <!--      <img v-if="items.imageUrl" :src="items.imageUrl" />-->
+    <!--    </div>-->
   </v-card>
 </template>
 <script>
 export default {
-  name:'imageUpload',
-  components: {
-  },
-  data () {
+  name: 'imageUpload',
+  props: ['user'],
+  components: {},
+  data() {
     return {
       items: {
-        image : null,
+        image: null,
         imageUrl: null
       },
       details: [
@@ -60,7 +60,7 @@ export default {
       this.image = file
       this.item.imageUrl = URL.createObjectURL(file)
     },
-    getClasses (index) {
+    getClasses(index) {
       var remainder = index % 3
       if (remainder === 0) {
         return 'col-md-3 col-md-offset-1'

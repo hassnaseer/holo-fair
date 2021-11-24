@@ -31,7 +31,7 @@
                                 type="email"
                                 label="Email"
                                 placeholder="Email"
-                                prepend-inner-icon="mdi-account"
+                                prepend-inner-icon="mdi-email"
                                 required
                             />
                             <v-text-field
@@ -109,7 +109,7 @@ export default {
       });
         },1000)
         }
-        let accesstoken = JSON.stringify(result.data.data.token);
+        let token = result.data.data.token;
         let user = JSON.stringify(result.data.data.user.id);
         let message = JSON.stringify(result.data.meta.message);
                 
@@ -123,7 +123,7 @@ export default {
         text: message,
       });
         },1000)
-        localStorage.setItem("token", accesstoken );
+        localStorage.setItem("token", token );
         localStorage.setItem("userid", user );
         this.$router.push({ path: '/overview'});
         }catch(e){

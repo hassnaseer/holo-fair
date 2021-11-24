@@ -163,7 +163,7 @@ export default {
         items: [
           { title: 'Basics', route: '/setup/basic' },
           { title: 'Registration Page',route:'/setup/registration' },
-          { title: 'Attendees Roles', route: '/setup/attendeesroles' },
+          { title: 'Create Roles', route: '/setup/attendeesroles' },
         ],
         title: 'Setup',
       },
@@ -222,6 +222,7 @@ export default {
       this.$router.push({ path: '/login'})
       localStorage.removeItem("token");
       localStorage.removeItem("userid");
+      localStorage.clear();
               setTimeout(()=> {
        this.loading = false
        this.$notify({

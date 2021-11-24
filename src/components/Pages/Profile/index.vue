@@ -139,7 +139,6 @@ export default {
   methods: {
     async submitHandler() {
       this.dialog = false
-      alert('profile submit')
       const id = localStorage.getItem("userid");
       const formData = new FormData();
       //formData.append('profileImage', file);
@@ -157,12 +156,12 @@ export default {
         processData: false,
         data: formData,
       });
-      alert(JSON.stringify(res));
+     // alert("Profile Index");
       if (res.data.success) {
         this.$message.success('Updated successfully.');
       } else {
         this.loading = false
-        this.$message.error('Updation failed.');
+        this.$message.error(' failed.');
       }
     },
   },

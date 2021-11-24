@@ -3,11 +3,11 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <edit-profile-form userData="data">
+          <edit-profile-form :user="userData">
           </edit-profile-form>
         </div>
         <div class="col-md-4">
-          <user-card>
+          <user-card :user="userData">
           </user-card>
         </div>
       </div>
@@ -27,11 +27,16 @@ export default {
     } else
       next('/login')
   },
+  data() {
+    return {
+      userData: null
+    }
+  },
   mounted() {
-    this.getEmails()
+    this.getUser();
   },
   methods: {
-    async getEmails() {
+    async getUser() {
       try {
         const id = localStorage.getItem("userid");
         const response = await axios.get(
@@ -39,18 +44,13 @@ export default {
         );
         this.userData = response.data.data;
       } catch (error) {
-        alert(error);
+        alert("error");
       }
     },
   },
   components: {
     EditProfileForm,
-    UserCard
-  },
-  data() {
-    return {
-      userData: {},
-    }
+    UserCard,
   },
 }
 
