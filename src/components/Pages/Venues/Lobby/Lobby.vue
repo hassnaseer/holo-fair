@@ -5,7 +5,6 @@
       <a-upload-dragger
           name="file"
           :multiple="true"
-          action="https://holo-fair.herokuapp.com/api/v1/file-upload"
           :default-file-list="fileList"
           list-type="picture"
           :remove="handleRemove"
@@ -43,9 +42,7 @@
   </v-container>
 </template>
 <script>
-// import { Icon } from 'ant-design-vue';
 import axios from "axios";
-import {v4 as uuidv4} from 'uuid';
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -70,21 +67,24 @@ export default {
       if (response.data && response.data.data && response.data.data.lobbyContent) {
         let files = response.data.data.lobbyContent.map(item => {
           return {
-            uid: uuidv4(),
-            url: item,
-            name:"xxx.jpg",
-            status: 'done',
+            uid: item.uid,
+            name: item.name,
+            status: item.status,
+            url: item.url,
           }
         });
         this.fileList = files ? files : []
+        //alert(JSON.stringify(this.fileList))
       }
     } catch (error) {
       alert(error)
     }
-
   },
   methods: {
-    handleRemove(file) {
+    async handleRemove(file) {
+      const eventId = localStorage.getItem("eventId");
+      const res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/remove-file/${eventId}/lobby/${file.uid}`);
+      this.$message.success(res.data.message);
       const index = this.fileList.indexOf(file);
       const newFileList = this.fileList.slice();
       newFileList.splice(index, 1);
@@ -109,10 +109,13 @@ export default {
       const {fileList} = this;
       const formData = new FormData();
       fileList.forEach((file) => {
-        formData.append('file', file);
-        formData.append('eventId', eventId);
-        formData.append('venue', 'lobby');
+        if (file.uid.includes("vc-upload-")) {
+          formData.append('file', file);
+        }
       });
+      formData.append('eventId', eventId);
+      formData.append('venue', 'lobby');
+      formData.append("boothName", 'lobby');
       this.loading = true
       const res = await axios({
         url: `${process.env.VUE_APP_SERVER_URL}/api/v1/file-upload`,
@@ -129,9 +132,7 @@ export default {
           this.$message.error('upload failed.');
         },
       });
-      alert(JSON.stringify(res));
       if (res.data.success) {
-        this.fileList = []
         this.loading = false
         this.$message.success('upload successfully.');
       } else {
