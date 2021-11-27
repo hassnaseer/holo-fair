@@ -16,7 +16,7 @@
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-title >{{ item.title }}</v-list-title>
+              <v-list-title>{{ item.title }}</v-list-title>
             </v-list-item-content>
           </template>
 
@@ -44,45 +44,45 @@
     </v-navigation-drawer>
     <v-app-bar app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-lg-none"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{count}}</v-toolbar-title>
+      <v-toolbar-title>{{ count }}</v-toolbar-title>
       <div class="ml-auto">
         <v-btn
             class="white--text d-none d-sm-inline-block mr-2"
             color="light-blue"
             v-if="this.$route.meta.button"
-             @click="showModal"
+            @click="showModal"
         >
           Send Announcement
         </v-btn>
-            <a-modal v-model="visible" title="Text Message" @ok="handleOk" okText="Save">
-              <!-- <div class="mb-2"> -->
-                <a-textarea
-                  v-model="value"
-                  placeholder="Controlled autosize"
-                  :auto-size="{ minRows: 3, maxRows: 5 }"
-                />
-              <!-- </div> -->
-                <v-checkbox
-                          v-model="checkboxloby"
-                          label="To users in lobby"
-                          required
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="checkboxauditorium"
-                          label="to users in auditorium"
-                          required
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="checkboxhall"
-                          label="to users in exhibition hall"
-                          required
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="checkboxroom"
-                          label="to users in meeting room"
-                          required
-                        ></v-checkbox>
-          </a-modal>
+        <a-modal v-model="visible" title="Text Message" @ok="handleOk" okText="Save">
+          <!-- <div class="mb-2"> -->
+          <a-textarea
+              v-model="value"
+              placeholder="Controlled autosize"
+              :auto-size="{ minRows: 3, maxRows: 5 }"
+          />
+          <!-- </div> -->
+          <v-checkbox
+              v-model="checkboxloby"
+              label="To users in lobby"
+              required
+          ></v-checkbox>
+          <v-checkbox
+              v-model="checkboxauditorium"
+              label="to users in auditorium"
+              required
+          ></v-checkbox>
+          <v-checkbox
+              v-model="checkboxhall"
+              label="to users in exhibition hall"
+              required
+          ></v-checkbox>
+          <v-checkbox
+              v-model="checkboxroom"
+              label="to users in meeting room"
+              required
+          ></v-checkbox>
+        </a-modal>
         <v-btn
             class="white--text d-none d-sm-inline-block"
             color="light-blue"
@@ -99,13 +99,13 @@
                       v-on="on"
             >
               <img
-                  src="https://cdn.vuetifyjs.com/images/john.jpg"
+                  :src="imageUrl"
                   alt="John"
                   class="mr-12"
               >
             </v-avatar>
           </template>
-          <v-list class="pa-2" >
+          <v-list class="pa-2">
             <v-list-item to="/profile" link active-class="bg-active">
               Edit Profile
             </v-list-item>
@@ -139,120 +139,124 @@
 // let value = JSON.stringify(this.$route.value);
 
 export default {
-    beforeRouteEnter (to, from, next) {
-      const token = localStorage.getItem('token')
-  if(token){
-    next()
-  }
-  else
-    next('/login')
+  beforeRouteEnter(to, from, next) {
+    const token = localStorage.getItem('token')
+    if (token) {
+      next()
+    } else
+      next('/login')
+  },
+  mounted() {
+    const imageUrl = localStorage.getItem('imageUrl');
+    this.imageUrl = imageUrl;
   },
   data: () => ({
-    loading:false,
-    snackbar:false,
-    value:'',
-    checkboxroom:'',
-    checkboxhall:'',
-    checkboxloby:'',
-    checkboxauditorium:'',
+    loading: false,
+    snackbar: false,
+    imageUrl: "http://ulm.webstudio.co.zw/themes/adminlte/img/user.png",
+    value: '',
+    checkboxroom: '',
+    checkboxhall: '',
+    checkboxloby: '',
+    checkboxauditorium: '',
     visible: false,
     drawer: true,
     items: [
       {
         action: 'mdi-silverware-fork-knife',
         items: [
-          { title: 'Basics', route: '/setup/basic' },
-          { title: 'Registration Page',route:'/setup/registration' },
-          { title: 'Create Roles', route: '/setup/attendeesroles' },
+          {title: 'Basics', route: '/setup/basic'},
+          {title: 'Registration Page', route: '/setup/registration'},
+          {title: 'Create Roles', route: '/setup/attendeesroles'},
         ],
         title: 'Setup',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Lobby', route: '/venues/lobby' },
-          { title: 'Auditorium',route: '/venues/auditorium'},
-          { title: 'Exhibition Hall', route: '/venues/exhibitionhall' },
-          { title: 'Meeting Room', route: '/venues/meetingroom' },
+          {title: 'Lobby', route: '/venues/lobby'},
+          {title: 'Auditorium', route: '/venues/auditorium'},
+          {title: 'Exhibition Hall', route: '/venues/exhibitionhall'},
+          {title: 'Meeting Room', route: '/venues/meetingroom'},
         ],
         title: 'Venues',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Attendees', route: '/people/attendees' }
+          {title: 'Attendees', route: '/people/attendees'}
         ],
         title: 'People',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Email Attendees', route: '/marketing/emailattendees' }
+          {title: 'Email Attendees', route: '/marketing/emailattendees'}
         ],
         title: 'Marketing',
       },
       {
         action: 'mdi-school',
         items: [
-          { title: 'Live Analytics', route: '/analytics/liveanalytics' },
-          { title: 'Reports', route: '/analytics/reports' },
+          {title: 'Live Analytics', route: '/analytics/liveanalytics'},
+          {title: 'Reports', route: '/analytics/reports'},
         ],
         title: 'Analytics',
       },
     ],
   }),
-  computed:  {
-    count (){
+  computed: {
+    count() {
       return this.$route.name
     },
-    button (){
+    button() {
       return this.$route.meta.button;
     }
   },
-  methods:{
-     showModal() {
+  methods: {
+    showModal() {
       this.visible = true;
     },
-    handleOk(){
+    handleOk() {
       this.visible = false;
     },
-    loader(){   
+    loader() {
     },
-    logout(){
-      this.$router.push({ path: '/login'})
+    logout() {
+      this.$router.push({path: '/login'})
       localStorage.removeItem("token");
       localStorage.removeItem("userid");
       localStorage.clear();
-              setTimeout(()=> {
-       this.loading = false
-       this.$notify({
-        group: 'foo',
-        type:"success",
-        position:"top left",
-        title: 'Successful.',
-        text: "User Logout Successfully",
-      });
-        },1000)
+      setTimeout(() => {
+        this.loading = false
+        this.$notify({
+          group: 'foo',
+          type: "success",
+          position: "top left",
+          title: 'Successful.',
+          text: "User Logout Successfully",
+        });
+      }, 1000)
     },
-    Publishevent(){
+    Publishevent() {
       this.$confirm(
-        {
-          title: 'Are you sure you want to Publish this event?',
-        message: 'Are you sure you want to logout?',
-          button: {
-            no: 'No',
-            yes: 'Yes'
-          },
-          /**
-          * Callback Function
-          * @param {Boolean} confirm 
-          */
-          callback: confirm => {
-            if (confirm) {
-              // ... do something
+          {
+            title: 'Are you sure you want to Publish this event?',
+            message: 'Are you sure you want to logout?',
+            button: {
+              no: 'No',
+              yes: 'Yes'
+            },
+            /**
+             * Callback Function
+             * @param {Boolean} confirm
+             */
+            callback: confirm => {
+              if (confirm) {
+                // ... do something
+              }
             }
           }
-        }
       )
       // this.loading = true
       // setTimeout(()=> {
@@ -264,13 +268,15 @@ export default {
 }
 </script>
 <style>
-.overview{
+.overview {
   margin-left: 0px !important;
 }
-.img{
+
+.img {
   width: 200px;
 }
-.v-list-item__title{
+
+.v-list-item__title {
   margin-left: 20px;
 }
 </style>
