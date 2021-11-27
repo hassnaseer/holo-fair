@@ -41,12 +41,12 @@
             </v-flex>
             <v-flex xs12>
               <v-label>Email</v-label>
-              <v-text-field outlined required v-model="email"
+              <v-text-field disabled outlined required v-model="email"
                             :rules="emailRules"></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-label>Contact Number</v-label>
-              <v-text-field outlined type="number" required v-model="ContactNumber"></v-text-field>
+              <v-text-field outlined type="number" required v-model="contactNumber"></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-label>Address</v-label>
@@ -64,7 +64,7 @@
             <v-flex xs12 sm6>
               <v-label>State</v-label>
               <v-select
-                  v-model="State"
+                  v-model="state"
                   :items="['Punjab', 'Canada', 'India', 'America']"
                   outlined
                   required
@@ -124,20 +124,27 @@ import axios from 'axios';
 
 export default {
   props: ['user'],
-   mounted() {
-    this.firstName  = this.user.firstName;
-    this.lastName = this.user.lastName;
-    this.email =this.user.email;
-    this.imageUrl = this.user.imageUrl;
-     alert(JSON.stringify(this.user));
-   },
+  mounted() {
+    setTimeout(() => {
+      this.firstName = this.user.firstName;
+      this.lastName = this.user.lastName;
+      this.email = this.user.email;
+      this.imageUrl = this.user.imageUrl;
+      this.city = this.user.city;
+      this.country = this.user.country;
+      this.state = this.user.state;
+      this.contactNumber =parseInt(this.user.contactNumber);
+      this.zipCode = this.user.zipCode;
+      this.address = this.user.address;
+    }, 1000);
+  },
   data: () => ({
     firstName: '',
     loading: false,
     imageUrl: '',
     lastName: '',
     email: '',
-    contactNumber: '',
+    contactNumber: null,
     address: '',
     city: '',
     state: '',
@@ -181,7 +188,7 @@ export default {
         formData.append('email', this.email);
         formData.append('password', this.password);
         formData.append('lastName', this.lastName);
-        formData.append('ciy', this.city);
+        formData.append('city', this.city);
         formData.append('country', this.country);
         formData.append('state', this.state);
         formData.append('contactNumber', this.contactNumber);

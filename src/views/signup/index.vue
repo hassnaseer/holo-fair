@@ -116,7 +116,7 @@ export default {
             email: this.email,
             password: this.password,
             firstName: this.firstName,
-            lastname: this.lastName
+            lastName: this.lastName
           });
           let message = JSON.stringify(result.data.meta.message);
           setTimeout(() => {
