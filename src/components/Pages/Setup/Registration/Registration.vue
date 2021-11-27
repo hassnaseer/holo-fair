@@ -42,7 +42,6 @@
                         <v-checkbox
                           v-model="checkboxPosition"
                           label="Position At Company"
-                          :disabled="true"
                           required
                         ></v-checkbox>
                     </v-card-text>
