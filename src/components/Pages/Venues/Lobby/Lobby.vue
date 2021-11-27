@@ -1,89 +1,110 @@
 <template>
-  <v-container fluid>
-    <v-form @submit.prevent="submitHandler" ref="form">
-      <h2>Upload media content to your lobby below:</h2>
-      <a-upload-dragger
-          name="file"
-          :multiple="true"
-          :default-file-list="fileList"
-          list-type="picture"
-          :remove="handleRemove"
-          :beforeUpload="beforeUpload"
-      >
-        <p class="ant-upload-drag-icon">
-          <a-icon type="inbox"/>
-        </p>
-        <p class="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p class="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-          band files
-        </p>
-      </a-upload-dragger>
-      <v-row>
-        <v-col cols="3" class="text-center">
+<v-container fluid>
+    <div class="row">
+       <v-col md="12" sm="12">
+      <span>
+        Upload Exhibitor booth content Below.
+      </span>
+    </v-col>
+        <v-col md="12" sm="12">
+      <span>
+        If you don't have Exhibitor booth or stands, Leave this section empty.
+      </span>
+    </v-col>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+<a-upload-dragger
+    name="file"
+    :multiple="true"
+    :default-file-list="fileList"
+    list-type="picture"
+    :remove="handleRemove"
+    :beforeUpload="beforeUpload"
+  >
+    <p class="ant-upload-drag-icon">
+      <a-icon type="inbox" />
+    </p>
+    <p class="ant-upload-text">
+      Click or drag file to this area to upload
+    </p>
+    <p class="ant-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+      band files
+    </p>
+  </a-upload-dragger>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+<a-upload-dragger
+    name="file"
+    :multiple="true"
+    :default-file-list="fileList"
+    list-type="picture"
+    :remove="handleRemove"
+    :beforeUpload="beforeUpload"
+  >
+    <p class="ant-upload-drag-icon">
+      <a-icon type="inbox" />
+    </p>
+    <p class="ant-upload-text">
+      Click or drag file to this area to upload
+    </p>
+    <p class="ant-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+      band files
+    </p>
+  </a-upload-dragger>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+<a-upload-dragger
+    name="file"
+    :multiple="true"
+    :default-file-list="fileList"
+    list-type="picture"
+    :remove="handleRemove"
+    :beforeUpload="beforeUpload"
+  >
+    <p class="ant-upload-drag-icon">
+      <a-icon type="inbox" />
+    </p>
+    <p class="ant-upload-text">
+      Click or drag file to this area to upload
+    </p>
+    <p class="ant-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+      band files
+    </p>
+  </a-upload-dragger>
+        </div>
+         <v-col cols="1" lg="1" md="1" sm="1" class="pl-12">
+<a-icon type="exclamation-circle" :style="{ fontSize: '30px'}"/>
+  </v-col>
+  <v-col col="10" lg="10" md="10" sm="10">
+    <h3>Max.Upload Size is : 2MB,</h3>
+    <h3>Recommended size is 2000* 800 px (5:2)</h3>
+  </v-col>
+<v-col cols="2" class="text-center">
           <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
         </v-col>
-        <v-col cols="3" class="text-center">
-          <v-btn class="upload-demo-start"
-                 type="submit"
-                 @click="handleUpload"
-                 :disabled="fileList.length === 0"
-                 :loading="loading"
-                 dark
-                 color="light-blue darken-2 px-8"
-          >{{ loading ? 'Uploading' : 'Upload' }}
-          </v-btn>
+        <v-col cols="2" class="text-center">
+          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
         </v-col>
-      </v-row>
-    </v-form>
+    </div>
 
-  </v-container>
+</v-container>
 </template>
 <script>
 import axios from "axios";
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    const token = localStorage.getItem('token')
-    if (token) {
-      next()
-    } else
-      next('/login')
-  },
   data() {
     return {
       fileList: [],
       loading: false,
     };
   },
-  async mounted() {
-    try {
-      const eventId = localStorage.getItem("eventId");
-      const response = await axios.get(
-          `${process.env.VUE_APP_SERVER_URL}/api/v1/venue/${eventId}`
-      );
-      if (response.data && response.data.data && response.data.data.lobbyContent) {
-        let files = response.data.data.lobbyContent.map(item => {
-          return {
-            uid: item.uid,
-            name: item.name,
-            status: item.status,
-            url: item.url,
-          }
-        });
-        this.fileList = files ? files : []
-        //alert(JSON.stringify(this.fileList))
-      }
-    } catch (error) {
-      alert(error)
-    }
-  },
   methods: {
     async handleRemove(file) {
       const eventId = localStorage.getItem("eventId");
-      const res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/remove-file/${eventId}/lobby/${file.uid}`);
+      const res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/remove-file/${eventId}/exhibitionhall/${file.uid}`);
       this.$message.success(res.data.message);
       const index = this.fileList.indexOf(file);
       const newFileList = this.fileList.slice();
@@ -114,8 +135,8 @@ export default {
         }
       });
       formData.append('eventId', eventId);
-      formData.append('venue', 'lobby');
-      formData.append("boothName", 'lobby');
+      formData.append('venue', 'exhibitionhall');
+      formData.append("boothName", 'exhibitionhall');
       this.loading = true
       const res = await axios({
         url: `${process.env.VUE_APP_SERVER_URL}/api/v1/file-upload`,
@@ -140,21 +161,17 @@ export default {
         this.$message.error('upload failed.');
       }
     },
-    // handleChange(info) {
-    //   const status = info.file.status;
-    //   if (status !== 'uploading') {
-    //     alert(info.file, info.fileList);
-    //   }
-    //   if (status === 'done') {
-    //     this.$message.success(`${info.file.name} file uploaded successfully.`);
-    //   } else if (status === 'error') {
-    //     this.$message.error(`${info.file.name} file upload failed.`);
-    //   }
-    // },
-    // submitHandler(info) {
-    //   // alert(JSON.stringify(`${info.file.name}`))
-    //   alert(info.file.status)
-    // }
+    handleChange(info) {
+      const status = info.file.status;
+      if (status !== 'uploading') {
+        // alert(info.file, info.fileList);
+      }
+      if (status === 'done') {
+        this.$message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        this.$message.error(`${info.file.name} file upload failed.`);
+      }
+    },
   },
 };
 </script>
