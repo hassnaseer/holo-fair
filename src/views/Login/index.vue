@@ -5,57 +5,57 @@
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
             <v-card class="elevation-12">
-                  <v-row>
-                    <v-col cols="12" md="4" class="light-blue darken-2">
-                      <v-card-title class="white--text">HoloFair Portal</v-card-title>
-                      <v-card-text class="white--text">
-                        <h2
-                            class="py-5"
-                        > JOIN <strong>LEADING</strong> 3D VIRTUAL EVENTS PLATFORMS IN SECONDS </h2>
-                        <span class="text-center">Create your own online custom event, access your events dashboard, and edit your venues easily.</span>
+              <v-row>
+                <v-col cols="12" md="4" class="light-blue darken-2">
+                  <v-card-title class="white--text">HoloFair Portal</v-card-title>
+                  <v-card-text class="white--text">
+                    <h2
+                        class="py-5"
+                    > JOIN <strong>LEADING</strong> 3D VIRTUAL EVENTS PLATFORMS IN SECONDS </h2>
+                    <span class="text-center">Create your own online custom event, access your events dashboard, and edit your venues easily.</span>
+                  </v-card-text>
+                  <div class="text-center">
+                    <v-btn outlined dark class="px-8" v-on:click="signup">SIGN UP</v-btn>
+                  </div>
+                </v-col>
+                <v-col cols="12" md="8">
+                  <v-card-text class="mt-12">
+                    <h1
+                        class="text-center display-2 light-blue--text py-4"
+                    >Sign in to HoloFair App</h1>
+                    <v-form @submit.prevent="submitHandler" ref="form">
+                      <v-card-text>
+                        <v-text-field
+                            v-model="email"
+                            :rules="emailRules"
+                            type="email"
+                            label="Email"
+                            placeholder="Email"
+                            prepend-inner-icon="mdi-email"
+                            required
+                        />
+                        <v-text-field
+                            v-model="password"
+                            :rules="passwordRules"
+                            :type="passwordShow?'text':'password'"
+                            label="Password"
+                            placeholder="Password"
+                            prepend-inner-icon="mdi-key"
+                            :append-icon="passwordShow ? 'mdi-eye':'mdi-eye-off'"
+                            @click:append="passwordShow = !passwordShow"
+                            required
+                        />
+                        <h3 class="text-center mt-4 forget" v-on:click="forget">Forgot your password ?</h3>
                       </v-card-text>
-                      <div class="text-center">
-                        <v-btn outlined dark class="px-8" v-on:click="signup">SIGN UP</v-btn>
-                      </div>
-                    </v-col>
-                    <v-col cols="12" md="8">
-                      <v-card-text class="mt-12">
-                        <h1
-                            class="text-center display-2 light-blue--text py-4"
-                        >Sign in to HoloFair App</h1>
-                        <v-form @submit.prevent="submitHandler" ref="form">
-                          <v-card-text>
-                            <v-text-field
-                                v-model="email"
-                                :rules="emailRules"
-                                type="email"
-                                label="Email"
-                                placeholder="Email"
-                                prepend-inner-icon="mdi-email"
-                                required
-                            />
-                            <v-text-field
-                                v-model="password"
-                                :rules="passwordRules"
-                                :type="passwordShow?'text':'password'"
-                                label="Password"
-                                placeholder="Password"
-                                prepend-inner-icon="mdi-key"
-                                :append-icon="passwordShow ? 'mdi-eye':'mdi-eye-off'"
-                                @click:append="passwordShow = !passwordShow"
-                                required
-                            />
-                            <h3 class="text-center mt-4 forget" v-on:click="forget">Forgot your password ?</h3>
-                          </v-card-text>
-                          <v-card-actions class="justify-center">
-                            <div class="text-center">
-                              <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Login</v-btn>
-                            </div>
-                          </v-card-actions>
-                        </v-form>
-                      </v-card-text>
-                    </v-col>
-                  </v-row>
+                      <v-card-actions class="justify-center">
+                        <div class="text-center">
+                          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Login</v-btn>
+                        </div>
+                      </v-card-actions>
+                    </v-form>
+                  </v-card-text>
+                </v-col>
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
@@ -64,7 +64,7 @@
     <v-snackbar top color="green" v-model="snackbar">
       Login Successfully
     </v-snackbar>
-        <v-snackbar top color="green" v-model="snackbarerror">
+    <v-snackbar top color="green" v-model="snackbarerror">
       invalid credentials success
     </v-snackbar>
   </v-app>
@@ -72,12 +72,13 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   data: () => ({
-    loading:false,
-    snackbar:false,
+    loading: false,
+    snackbar: false,
     snackbarerror: false,
-    passwordShow:false,
+    passwordShow: false,
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
@@ -89,59 +90,61 @@ export default {
       v => (v && v.length >= 6) || 'Password must be 6  characters or more!',
     ],
   }),
-  methods:{
-    async submitHandler(){
-      if (this.$refs.form.validate()){
-        try{
-        let result = await axios.post (`${process.env.VUE_APP_SERVER_URL}/api/v1/login`,{
-          email:this.email,
-          password: this.password
-        });
-        if(result.data.meta.status === 203){
+  methods: {
+    async submitHandler() {
+      if (this.$refs.form.validate()) {
+        try {
+          let result = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/login`, {
+            email: this.email,
+            password: this.password
+          });
+          if (result.data.meta.status === 203) {
+            let message = JSON.stringify(result.data.meta.message);
+            setTimeout(() => {
+              this.loading = false
+              this.$notify({
+                group: 'foo',
+                type: "error",
+                title: 'Please Check your credentials',
+                text: message,
+              });
+            }, 1000)
+          }
+          let token = result.data.data.token;
+          let userId = JSON.stringify(result.data.data.user.id);
+          let imageUrl = result.data.data.user.imageUrl;
           let message = JSON.stringify(result.data.meta.message);
-        setTimeout(()=> {
-        this.loading = false
-        this.$notify({
-        group: 'foo',
-        type:"error",
-        title: 'Please Check your credentials',
-        text: message,
-      });
-        },1000)
-        }
-        let token = result.data.data.token;
-        let user = JSON.stringify(result.data.data.user.id);
-        let message = JSON.stringify(result.data.meta.message);
-                
 
-        setTimeout(()=> {
-        this.loading = false
-        this.$notify({
-        group: 'foo',
-        type:"success",
-        title: 'Success',
-        text: message,
-      });
-        },1000)
-        localStorage.setItem("token", token );
-        localStorage.setItem("userid", user );
-        this.$router.push({ path: '/overview'});
-        }catch(e){
+
+          setTimeout(() => {
+            this.loading = false
+            this.$notify({
+              group: 'foo',
+              type: "success",
+              title: 'Success',
+              text: message,
+            });
+          }, 1000)
+          localStorage.setItem("token", token);
+          localStorage.setItem("userid", userId);
+          localStorage.setItem("imageUrl", imageUrl);
+          this.$router.push({path: '/overview'});
+        } catch (e) {
           let message = JSON.stringify(e.response.data.meta.message);
           this.$notify({
             group: 'foo',
-            type:"error",
+            type: "error",
             title: 'Success',
             text: message,
-      });
+          });
         }
       }
     },
-    forget () {
-      this.$router.push({ path: '/forgetpassword'})
+    forget() {
+      this.$router.push({path: '/forgetpassword'})
     },
-    signup (){
-      this.$router.push({ path: '/signup'})
+    signup() {
+      this.$router.push({path: '/signup'})
     }
   },
   props: {
@@ -150,7 +153,7 @@ export default {
 };
 </script>
 <style>
-.forget{
+.forget {
   cursor: pointer;
 }
 </style>

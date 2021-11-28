@@ -133,7 +133,7 @@ export default {
       this.city = this.user.city;
       this.country = this.user.country;
       this.state = this.user.state;
-      this.contactNumber =parseInt(this.user.contactNumber);
+      this.contactNumber = parseInt(this.user.contactNumber);
       this.zipCode = this.user.zipCode;
       this.address = this.user.address;
     }, 1000);
@@ -176,8 +176,9 @@ export default {
       formData.append('profileImage', file);
       const id = localStorage.getItem("userid");
       let res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/profile-image/${id}`, formData);
-      alert(JSON.stringify(res.data.data));
       this.imageUrl = res.data.data;
+      localStorage.setItem("imageUrl", this.imageUrl);
+      window.location.reload();
     },
     async submitHandler() {
       if (this.$refs.form.validate()) {
