@@ -77,7 +77,7 @@
     </v-checkbox>
       </v-col>
       <v-col cols="6">
-        <img v-if="checkbox === true" src="https://cdn.vuetifyjs.com/images/john.jpg">
+        <img src="https://cdn.vuetifyjs.com/images/john.jpg">
       </v-col>
           <v-col cols="5" class="float-right">
           <v-btn :loading="loading" @click="submitHandler()" color="light-blue darken-2 px-8" dark>Publish</v-btn>

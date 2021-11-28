@@ -3,12 +3,7 @@
     <div class="row">
        <v-col md="12" sm="12">
       <span>
-        Upload Exhibitor booth content Below.
-      </span>
-    </v-col>
-        <v-col md="12" sm="12">
-      <span>
-        If you don't have Exhibitor booth or stands, Leave this section empty.
+                Upload media content to your lobby Below.
       </span>
     </v-col>
         <div class="col-lg-4 col-md-6 col-sm-12">
