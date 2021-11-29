@@ -122,5 +122,6 @@ export default {
 }
 .span{
   font-size: 29px;
+  line-height: initial;
 }
 </style>

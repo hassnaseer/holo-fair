@@ -101,7 +101,7 @@
               <img
                   :src="imageUrl"
                   alt="John"
-                  class="mr-12"
+                  class="mr-12 img-profile"
               >
             </v-avatar>
           </template>
@@ -271,7 +271,11 @@ export default {
 .overview {
   margin-left: 0px !important;
 }
-
+.img-profile{
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 50px;
+}
 .img {
   width: 200px;
 }

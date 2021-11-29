@@ -87,25 +87,25 @@ let router = new Router({
           path: 'people/attendees',
           name: 'Attendess',
           component: () => import('../components/Pages/People/Attendess/Attendess'),
-          meta: { title: 'Attendess', button: true  },
+          meta: { title: 'Attendess' },
         },
         {
           path: 'marketing/emailattendees',
           name: 'Email Attendees',
           component: () => import('../components/Pages/Marketing/EmailAttendees/emailAttendess'),
-          meta: { title: 'Email Attendees', button: true  },
+          meta: { title: 'Email Attendees' },
         },
         {
           path: 'analytics/liveanalytics',
           name: 'Live Analytics',
           component: () => import('../components/Pages/Analytics/LiveAnalytics/liveAnalytics'),
-          meta: { title: 'Live Analytics', button: true  },
+          meta: { title: 'Live Analytics'  },
         },
         {
           path: 'analytics/reports',
           name: 'Reports',
           component: () => import('../components/Pages/Analytics/Reports/Reports'),
-          meta: { title: 'Reports', button: true},
+          meta: { title: 'Reports'},
         }
       ]
     },

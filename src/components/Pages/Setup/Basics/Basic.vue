@@ -53,21 +53,18 @@
               </span>
             </v-col>
             <v-col
-        cols="12"
-        md="12"
-        lg="12"
+        md="8"
+        lg="8"
         sm="12"
       >
-      <span class="main-text mb-4">Text Message to be Displayed:</span>
+      <span class="main-text">Text Message to be Displayed:</span>
         <v-textarea
           solo
-          class="text-area"
+          class="text-area mt-3"
           name="input-7-4"
           v-model="message"
           label="Solo textarea"
         ></v-textarea>
-      </v-col>
-      <v-col cols="6">
         <v-checkbox v-model="checkbox">
       <template v-slot:label>
         <div>
@@ -76,7 +73,7 @@
       </template>
     </v-checkbox>
       </v-col>
-      <v-col cols="6">
+      <v-col lg="4" md="4" sm="12">
         <img src="https://cdn.vuetifyjs.com/images/john.jpg">
       </v-col>
           <v-col cols="5" class="float-right">
@@ -84,7 +81,7 @@
         </v-col>
           </v-row>
       </v-card-text>
-      <v-card-actions class="justify-center">
+      <v-card-actions class="justify-lg-space-between">
         <v-col cols="5" class="text-center">
           <v-btn :loading="loading" @click="back()" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
         </v-col>
@@ -187,8 +184,7 @@ export default {
 }
 .v-input__slot{
   background-color: transparent !important;
-border: 1px solid #d9d9d9 !important;
-  /* border: 1px solid grey !important; */
+border: none !important;
 }
 .ant-input{
 background-color: transparent !important;
@@ -198,8 +194,12 @@ border: 1px solid #d9d9d9 !important;
   background-color: transparent !important;
 border: 1px solid #d9d9d9 !important;
 }
+.ant-calendar-picker-input.ant-input{
+  height:50px;
+}
 .main-text{
   font-size: 26px;
+  line-height: initial;
   color:gray;
 }
 </style>
