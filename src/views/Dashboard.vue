@@ -94,7 +94,7 @@
             open-on-hover
             offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-avatar class="ml-12"
+            <v-avatar class="ml-4"
                       v-bind="attrs"
                       v-on="on"
             >
