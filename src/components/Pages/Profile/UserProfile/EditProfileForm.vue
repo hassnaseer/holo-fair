@@ -115,12 +115,7 @@
 </template>
 <script>
 import axios from 'axios';
-
-// function getBase64(img, callback) {
-//   const reader = new FileReader();
-//   reader.addEventListener('load', () => callback(reader.result));
-//   reader.readAsDataURL(img);
-// }
+import '@/mixins/generalMixin';
 
 export default {
   props: ['user'],
@@ -168,17 +163,37 @@ export default {
           })
           .catch((err) => {
             onError(null, file);
-            alert(err);
+            alert("Error--->" + err);
           });
     },
     async upload(file) {
-      const formData = new FormData();
-      formData.append('profileImage', file);
-      const id = localStorage.getItem("userid");
-      let res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/profile-image/${id}`, formData);
-      this.imageUrl = res.data.data;
-      localStorage.setItem("imageUrl", this.imageUrl);
-      window.location.reload();
+      try {
+        const formData = new FormData();
+        formData.append('profileImage', file);
+        const userData = this.parseJwt(localStorage.getItem('token'));
+        const id = userData.id;
+        let res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/profile-image/${id}`, formData);
+        this.imageUrl = res.data.data;
+        this.$notify({
+          group: 'foo',
+          position: "top left",
+          title: 'Success',
+          type: "success",
+          text: res.data.meta.message,
+        });
+        localStorage.setItem("imageUrl", this.imageUrl);
+        window.location.reload();
+
+      } catch (e) {
+        this.$notify({
+          group: 'foo',
+          position: "top left",
+          title: 'Error while Updating Profile Image',
+          type: "error",
+          text: e.message,
+        });
+      }
+
     },
     async submitHandler() {
       if (this.$refs.form.validate()) {
@@ -207,6 +222,7 @@ export default {
             text: message,
           });
         }, 1000)
+        window.location.reload();
       }
     },
     handleChange(info) {

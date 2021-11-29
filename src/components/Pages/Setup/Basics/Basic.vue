@@ -161,7 +161,7 @@ export default {
         type:"success",
         position:"top left",
         title: 'Successful.',
-        text: "Form Fill success full:)",
+        text: "Form Filled Successfully:)",
       });
         },1000)
         this.$router.push({ path: '/setup/registration'})

@@ -18,6 +18,7 @@
 import EditProfileForm from './UserProfile/EditProfileForm.vue'
 import UserCard from './UserProfile/UserCard.vue'
 import axios from "axios";
+import '@/mixins/generalMixin';
 
 export default {
   beforeRouteEnter(to, from, next) {
@@ -38,13 +39,14 @@ export default {
   methods: {
     async getUser() {
       try {
-        const id = localStorage.getItem("userid");
+        const userData = this.parseJwt(localStorage.getItem('token'));
+        const id = userData.id
         const response = await axios.get(
             `${process.env.VUE_APP_SERVER_URL}/api/v1/user/${id}`
         );
         this.userData = response.data.data;
       } catch (error) {
-        alert("error");
+        alert(error.message)
       }
     },
   },
