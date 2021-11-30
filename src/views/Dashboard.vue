@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-navigation-drawer
+    <v-navigation-drawer class="sidebar"
         v-model="drawer" app>
       <img src="../../public/HoloFair-by-Outreal-XR-Logo.png" alt="" class="img pt-2 pl-5">
       <v-list class="pa-2">
         <v-list-item to="/overview" link active-class="bg-active">
-          <v-list-item-title class="overview">OverView</v-list-item-title>
+          <v-list-item-title class="overview">Overview</v-list-item-title>
         </v-list-item>
         <v-list-group
             v-for="item in items"
@@ -42,7 +42,7 @@
         </div>
       </template>
     </v-navigation-drawer>
-    <v-app-bar app>
+    <v-app-bar app class="header">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-lg-none"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ count }}</v-toolbar-title>
       <div class="ml-auto">
@@ -94,14 +94,14 @@
             open-on-hover
             offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-avatar class="ml-12"
+            <v-avatar class="ml-4"
                       v-bind="attrs"
                       v-on="on"
             >
               <img
                   :src="imageUrl"
                   alt="John"
-                  class="mr-12"
+                  class="mr-12 img-profile"
               >
             </v-avatar>
           </template>
@@ -271,11 +271,25 @@ export default {
 .overview {
   margin-left: 0px !important;
 }
-
-.img {
-  width: 200px;
+.img-profile{
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 50px;
 }
-
+.img {
+  width: 175px;
+}
+.sidebar{
+  width:200px !important; 
+}
+.v-main{
+  padding: 64px 0px 0px 200px !important;
+  //background:#F5F5F5 !important;
+}
+.header{
+  left:180px !important;
+  background: white !important;
+}
 .v-list-item__title {
   margin-left: 20px;
 }

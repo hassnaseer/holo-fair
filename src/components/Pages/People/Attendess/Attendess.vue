@@ -42,8 +42,8 @@
                             md="4"
                         >
                           <v-text-field
-                              v-model="editedItem.firstName"
-                              label="User Name"
+                              v-model="editedItem.fullName"
+                              label="Full Name"
                           ></v-text-field>
                         </v-col>
                         <v-col
@@ -51,10 +51,11 @@
                             sm="6"
                             md="4"
                         >
-                          <v-text-field
+                          <v-select
                               v-model="editedItem.role"
+                              :items="roles"
                               label="Roles"
-                          ></v-text-field>
+                          ></v-select>
                         </v-col>
                         <v-col
                             cols="12"
@@ -150,14 +151,15 @@ export default {
   },
   data: () => ({
     data: [],
+    roles: [],
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: 'User Name',
+        text: 'Full Name',
         align: 'start',
         sortable: false,
-        value: 'firstName',
+        value: 'fullName',
       },
       {text: 'Email', value: 'email'},
       {text: 'Roles', value: 'role'},
@@ -166,12 +168,12 @@ export default {
     desserts: [],
     editedIndex: -1,
     editedItem: {
-      firstName: '',
+      fullName: '',
       email: '',
       role: '',
     },
     defaultItem: {
-      firstName: '',
+      fullName: '',
       email: '',
       role: '',
     },
@@ -196,12 +198,29 @@ export default {
   },
   mounted() {
     this.getAttendees();
+    this.getRoles();
   },
   methods: {
+    async getRoles() {
+      try {
+        const response = await axios.get(
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-roles`
+        );
+        let roles = response.data.data;
+        if (roles) {
+          this.roles = roles.map(r => {
+            return r.roleName
+          });
+
+        }
+      } catch (error) {
+        alert(error);
+      }
+    },
     async getAttendees() {
       try {
         const response = await axios.get(
-            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendees`
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendees/1`
         );
         this.data = response.data.data;
       } catch (error) {
@@ -262,15 +281,15 @@ export default {
 
     async save() {
       try {
-        alert(JSON.stringify(this.formTitle));
+        const eventId = localStorage.getItem("eventId");
         if (this.formTitle === "New User") {
           await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-people`, {
-            ...this.editedItem, operation: "C"
+            ...this.editedItem, operation: "C", eventId: eventId
           });
           // alert(res.data.meta.message)
         } else {
-           await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-people`, {
-            ...this.editedItem, operation: "E"
+          await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-people`, {
+            ...this.editedItem, operation: "E", eventId: eventId
           });
         }
         if (this.editedIndex > -1) {

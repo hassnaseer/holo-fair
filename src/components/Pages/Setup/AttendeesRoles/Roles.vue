@@ -1,138 +1,271 @@
 <template>
-  <a-form :form="form" @submit="handleSubmit">
-    <a-form-item
-      v-for="(k, index) in form.getFieldValue('keys')"
-      :key="k"
-      v-bind="index === 0 ? formItemLayout : formItemLayoutWithOutLabel"
-      :label="index === 0 ? 'Passengers' : ''"
-      :required="false"
-    >
-      <a-input
-        v-decorator="[
-          `names[${k}]`,
-          {
-            validateTrigger: ['change', 'blur'],
-            rules: [
-              {
-                required: true,
-                whitespace: true,
-                message: 'Please input passenger\'s name or delete this field.',
-              },
-            ],
-          },
-        ]"
-        placeholder="passenger name"
-        style="width: 60%; margin-right: 8px"
-      />
-      <a-icon
-        v-if="form.getFieldValue('keys').length > 1"
-        class="dynamic-delete-button"
-        type="minus-circle-o"
-        :disabled="form.getFieldValue('keys').length === 1"
-        @click="() => remove(k)"
-      />
-    </a-form-item>
-    <a-form-item v-bind="formItemLayoutWithOutLabel">
-      <a-button type="dashed" style="width: 60%" @click="add">
-        <a-icon type="plus" /> Add field
-      </a-button>
-    </a-form-item>
-    <a-form-item v-bind="formItemLayoutWithOutLabel">
-      <a-button type="primary" html-type="submit">
-        Submit
-      </a-button>
-    </a-form-item>
-  </a-form>
-</template>
+  <v-container fluid>
+    <v-row>
+      <v-col lg="12" md="12" sm="12">
+        <v-data-table
+            :headers="headers"
+            :items="data"
+            :color="getColor(carbs)"
+            sort-by="calories"
+            class="elevation-1"
+        >
+          <template v-slot:top>
+            <v-toolbar
+                flat
+            >
+              <v-dialog
+                  v-model="dialog"
+                  max-width="500px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                      color="primary"
+                      dark
+                      class="mb-2"
+                      v-bind="attrs"
+                      v-on="on"
+                  >
+                    ADD New Role
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">{{ formTitle }}</span>
+                  </v-card-title>
 
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="6"
+                        >
+                          <v-text-field
+                              v-model="editedItem.roleName"
+                              label="Role"
+                          ></v-text-field>
+
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            sm="6"
+                            md="6"
+                        >
+                          <v-select
+                              multiple="true"
+                              v-model="editedItem.access"
+                              :items="access"
+                              label="Access"
+                          ></v-select>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="close"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="save"
+                    >
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <v-dialog v-model="dialogDelete" max-width="500px">
+                <v-card>
+                  <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <v-icon
+                small
+                class="mr-2"
+                @click="editItem(item)"
+            >
+              mdi-pencil
+            </v-icon>
+            <v-icon
+                small
+                @click="deleteItem(item)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <template v-slot:no-data>
+            <span
+                color="primary"
+                @click="initialize"
+            >
+              No Record Found
+            </span>
+          </template>
+        </v-data-table>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
+
+</template>
 <script>
-let id = 0;
+import axios from "axios";
+
 export default {
-    beforeRouteEnter (to, from, next) {
-      const token = localStorage.getItem('token')
-  if(token){
-    next()
-  }
-  else
-    next('/login')
+  beforeRouteEnter(to, from, next) {
+    const token = localStorage.getItem('token')
+    if (token) {
+      next()
+    } else
+      next('/login')
   },
-  data() {
-    return {
-      formItemLayout: {
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 4 },
-        },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 20 },
-        },
-      },
-      formItemLayoutWithOutLabel: {
-        wrapperCol: {
-          xs: { span: 24, offset: 0 },
-          sm: { span: 20, offset: 4 },
-        },
-      },
-    };
+  data: () => ({
+    access: ['Meeting Room', 'Auditorium', 'Exhibition Hall', 'Lobby'],
+    data: [],
+    dialog: false,
+    dialogDelete: false,
+    headers: [
+      {text: 'Roles', value: 'roleName'},
+      {text: 'Access', value: 'access'},
+      {text: 'Actions', value: 'actions', sortable: false},
+    ],
+    desserts: [],
+    editedIndex: -1,
+    editedItem: {
+      roleName: '',
+      access: [],
+    },
+    defaultItem: {
+      roleName: '',
+      access: [],
+    },
+  }),
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'New Role' : 'Edit Role'
+    },
   },
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'dynamic_form_item' });
-    this.form.getFieldDecorator('keys', { initialValue: [], preserve: true });
+
+  watch: {
+    dialog(val) {
+      val || this.close()
+    },
+  },
+
+  created() {
+    this.initialize()
+  },
+  mounted() {
+    this.getRoles();
   },
   methods: {
-    remove(k) {
-      const { form } = this;
-      // can use data-binding to get
-      const keys = form.getFieldValue('keys');
-      // We need at least one passenger
-      if (keys.length === 1) {
-        return;
+    async getRoles() {
+      try {
+        const response = await axios.get(
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-roles`
+        );
+        this.data = response.data.data;
+      } catch (error) {
+        alert(error);
       }
-
-      // can use data-binding to set
-      form.setFieldsValue({
-        keys: keys.filter(key => key !== k),
-      });
+    },
+    getColor(carbs) {
+      if (carbs === "Active") return 'red'
+      else if (carbs === "Inactive") return 'orange'
+      else return 'green'
+    },
+    initialize() {
+      this.desserts = [
+        {
+          name: 'Anurag',
+          fat: 'anurag@outrealxr.com',
+          roles: 'admin',
+        },
+        {
+          name: 'Anurag',
+          fat: 'anurag@outrealxr.com',
+          roles: 'client',
+        },
+      ]
+    },
+    editItem(item) {
+      this.editedIndex = this.data.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
     },
 
-    add() {
-      const { form } = this;
-      // can use data-binding to get
-      const keys = form.getFieldValue('keys');
-      const nextKeys = keys.concat(id++);
-      // can use data-binding to set
-      // important! notify form to detect changes
-      form.setFieldsValue({
-        keys: nextKeys,
-      });
+    deleteItem(item) {
+      this.editedIndex = this.data.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete = true
     },
 
-    handleSubmit(e) {
-      e.preventDefault();
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          alert(values)
+    deleteItemConfirm() {
+      this.data.splice(this.editedIndex, 1)
+      this.closeDelete()
+    },
+
+    close() {
+      this.dialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    closeDelete() {
+      this.dialogDelete = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    async save() {
+      try {
+        alert(JSON.stringify(this.editedItem));
+        if (this.formTitle === "New Role") {
+          await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-role`, {
+            ...this.editedItem, operation: "C"
+          });
+          // alert(res.data.meta.message)
+        } else {
+          await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/attendee-role`, {
+            ...this.editedItem, operation: "E"
+          });
         }
-      });
-    },
-  },
-};
+        if (this.editedIndex > -1) {
+          Object.assign(this.data[this.editedIndex], this.editedItem)
+        } else {
+          this.data.push(this.editedItem)
+        }
+        this.close()
+      } catch (er) {
+        alert("Error: " + er.message)
+      }
+    }
+  }
+}
 </script>
-<style>
-.dynamic-delete-button {
-  cursor: pointer;
-  position: relative;
-  top: 4px;
-  font-size: 24px;
-  color: #999;
-  transition: all 0.3s;
-}
-.dynamic-delete-button:hover {
-  color: #777;
-}
-.dynamic-delete-button[disabled] {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-</style>
