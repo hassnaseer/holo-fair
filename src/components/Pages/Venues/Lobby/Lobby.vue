@@ -1,90 +1,90 @@
 <template>
-<v-container fluid>
+  <v-container fluid>
     <div class="row">
-       <v-col md="12" sm="12">
+      <v-col md="12" sm="12">
       <span>
                 Upload media content to your lobby Below.
       </span>
-    </v-col>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-<a-upload-dragger
-    name="file"
-    :multiple="true"
-    :default-file-list="fileList"
-    list-type="picture"
-    :remove="handleRemove"
-    :beforeUpload="beforeUpload"
-  >
-    <p class="ant-upload-drag-icon">
-      <a-icon type="inbox" />
-    </p>
-    <p class="ant-upload-text">
-      Click or drag file to this area to upload
-    </p>
-    <p class="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </a-upload-dragger>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-<a-upload-dragger
-    name="file"
-    :multiple="true"
-    :default-file-list="fileList"
-    list-type="picture"
-    :remove="handleRemove"
-    :beforeUpload="beforeUpload"
-  >
-    <p class="ant-upload-drag-icon">
-      <a-icon type="inbox" />
-    </p>
-    <p class="ant-upload-text">
-      Click or drag file to this area to upload
-    </p>
-    <p class="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </a-upload-dragger>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-<a-upload-dragger
-    name="file"
-    :multiple="true"
-    :default-file-list="fileList"
-    list-type="picture"
-    :remove="handleRemove"
-    :beforeUpload="beforeUpload"
-  >
-    <p class="ant-upload-drag-icon">
-      <a-icon type="inbox" />
-    </p>
-    <p class="ant-upload-text">
-      Click or drag file to this area to upload
-    </p>
-    <p class="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </a-upload-dragger>
-        </div>
-         <v-col cols="1" lg="1" md="1" sm="1" class="pl-12">
-<a-icon type="exclamation-circle" :style="{ fontSize: '30px'}"/>
-  </v-col>
-  <v-col col="10" lg="10" md="10" sm="10">
-    <h3>Max.Upload Size is : 2MB,</h3>
-    <h3>Recommended size is 2000* 800 px (5:2)</h3>
-  </v-col>
-<v-col cols="2" class="text-center">
-          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
-        </v-col>
-        <v-col cols="2" class="text-center">
-          <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
-        </v-col>
+      </v-col>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <a-upload-dragger
+            name="file"
+            :multiple="true"
+            :default-file-list="fileList"
+            list-type="picture"
+            :remove="handleRemove"
+            :beforeUpload="beforeUpload"
+        >
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox"/>
+          </p>
+          <p class="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p class="ant-upload-hint">
+            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+            band files
+          </p>
+        </a-upload-dragger>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <a-upload-dragger
+            name="file"
+            :multiple="true"
+            :default-file-list="fileList"
+            list-type="picture"
+            :remove="handleRemove"
+            :beforeUpload="beforeUpload"
+        >
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox"/>
+          </p>
+          <p class="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p class="ant-upload-hint">
+            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+            band files
+          </p>
+        </a-upload-dragger>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <a-upload-dragger
+            name="file"
+            :multiple="true"
+            :default-file-list="fileList"
+            list-type="picture"
+            :remove="handleRemove"
+            :beforeUpload="beforeUpload"
+        >
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox"/>
+          </p>
+          <p class="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p class="ant-upload-hint">
+            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+            band files
+          </p>
+        </a-upload-dragger>
+      </div>
+      <v-col cols="1" lg="1" md="1" sm="1" class="pl-12">
+        <a-icon type="exclamation-circle" :style="{ fontSize: '30px'}"/>
+      </v-col>
+      <v-col col="10" lg="10" md="10" sm="10">
+        <h3>Max.Upload Size is : 2MB,</h3>
+        <h3>Recommended size is 2000* 800 px (5:2)</h3>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Cancel</v-btn>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn :loading="loading" type="submit" color="light-blue darken-2 px-8" dark> Save</v-btn>
+      </v-col>
     </div>
 
-</v-container>
+  </v-container>
 </template>
 <script>
 import axios from "axios";
@@ -98,9 +98,11 @@ export default {
   },
   methods: {
     async handleRemove(file) {
-      const eventId = localStorage.getItem("eventId");
-      const res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/remove-file/${eventId}/exhibitionhall/${file.uid}`);
-      this.$message.success(res.data.message);
+      if (!file.uid.includes("vc-upload-")) {
+        const eventId = localStorage.getItem("eventId");
+        const res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/remove-file/${eventId}/exhibitionhall/${file.uid}`);
+        this.$message.success(res.data.message);
+      }
       const index = this.fileList.indexOf(file);
       const newFileList = this.fileList.slice();
       newFileList.splice(index, 1);
