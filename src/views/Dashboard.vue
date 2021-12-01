@@ -277,17 +277,12 @@ export default {
   border-radius: 50px;
 }
 .img {
-  width: 175px;
+  width: 200px;
 }
 .sidebar{
-  width:200px !important; 
-}
-.v-main{
-  padding: 64px 0px 0px 200px !important;
-  //background:#F5F5F5 !important;
+  border-right:1px solid #F5F5F5;
 }
 .header{
-  left:180px !important;
   background: white !important;
 }
 .v-list-item__title {
