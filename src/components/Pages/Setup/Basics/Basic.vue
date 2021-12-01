@@ -58,7 +58,7 @@
               <v-checkbox v-model="checkbox">
                 <template v-slot:label>
                   <div>
-                    Include red ribon infront of Venue
+                    Include red ribbon in front of Venue
                   </div>
                 </template>
               </v-checkbox>
@@ -122,6 +122,7 @@ export default {
       startValue: "",
       endValue: "",
       endOpen: false,
+      message:'',
       checkbox: false,
     };
   },
@@ -166,7 +167,7 @@ export default {
               checkbox: this.checkbox,
             }
         );
-        localStorage.setItem("eventId", res.data.data.id);
+        localStorage.setItem("eventId", res.data.data.data.id);
         setTimeout(() => {
           this.loading = false;
           this.$notify({

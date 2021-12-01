@@ -219,8 +219,10 @@ export default {
     },
     async getAttendees() {
       try {
+        const eventId = localStorage.getItem("eventId");
+        const id = eventId ? eventId : 1
         const response = await axios.get(
-            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendees/1`
+            `${process.env.VUE_APP_SERVER_URL}/api/v1/attendees/${id}`
         );
         this.data = response.data.data;
       } catch (error) {
