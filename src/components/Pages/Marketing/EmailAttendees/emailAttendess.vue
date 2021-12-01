@@ -49,8 +49,8 @@
               </v-col>
               <v-col cols="2"><label>Message</label></v-col>
               <v-col cols="10">
-                <v-text-field name="message" v-model="message" outlined>
-                </v-text-field>
+                <quillEditor v-model="message">
+                </quillEditor>
               </v-col>
               <v-col cols="4 ml-auto">
                 <v-btn :loading="loading" color="light-blue darken-2 px-8" value="send" dark @click="sendEmail()">
@@ -72,6 +72,11 @@
 <script>
 // import { VueEditor } from "vue2-editor";
 // import emailjs from 'emailjs-com';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+ 
+import { quillEditor } from 'vue-quill-editor'
 import axios from 'axios'
 
 const columns = [
@@ -99,6 +104,9 @@ const columns = [
   },
 ];
 export default {
+  components: {
+    quillEditor
+  },
   data() {
     return {
       data: [],
