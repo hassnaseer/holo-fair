@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="12" md="8" lg="8">
           <v-card class="px-3">
-            <v-row>
+            <v-row class="mt-0">
             <v-col cols="12" sm="12" md="4" lg="4">
     <a-steps :current="current" direction="vertical" @change="onChange" v-model="current">
       <a-step v-for="item in steps" :key="item.title" :title="item.title" />
