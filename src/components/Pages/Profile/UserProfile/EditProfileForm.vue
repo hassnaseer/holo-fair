@@ -174,24 +174,30 @@ export default {
         const id = userData.id;
         let res = await axios.post(`${process.env.VUE_APP_SERVER_URL}/api/v1/profile-image/${id}`, formData);
         this.imageUrl = res.data.data;
-        this.$notify({
-          group: 'foo',
-          position: "top left",
-          title: 'Success',
-          type: "success",
-          text: res.data.meta.message,
-        });
+        setTimeout(() => {
+          this.loading = false
+          this.$notify({
+            group: 'foo',
+            position: "top left",
+            title: 'Success',
+            type: "success",
+            text: res.data.meta.message,
+          });
+        }, 3000)
         localStorage.setItem("imageUrl", this.imageUrl);
         window.location.reload();
 
       } catch (e) {
-        this.$notify({
-          group: 'foo',
-          position: "top left",
-          title: 'Error while Updating Profile Image',
-          type: "error",
-          text: e.message,
-        });
+        setTimeout(() => {
+          this.$notify({
+            group: 'foo',
+            position: "top left",
+            title: 'Error',
+            type: "error",
+            text: e.message,
+          });
+        }, 3000)
+        window.location.reload();
       }
 
     },
@@ -221,7 +227,7 @@ export default {
             type: "success",
             text: message,
           });
-        }, 1000)
+        }, 3000)
         window.location.reload();
       }
     },

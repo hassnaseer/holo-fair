@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-navigation-drawer class="sidebar"
-        v-model="drawer" app>
+                         v-model="drawer" app>
       <img src="../../public/HoloFair-by-Outreal-XR-Logo.png" alt="" class="img pt-2 pl-5">
       <v-list class="pa-2">
         <v-list-item to="/overview" link active-class="bg-active">
@@ -122,11 +122,7 @@
           text
           cols="12"
       >
-        <strong>Copyrights © 2021 Outreal XR, UAE. All rights reserved.</strong>
-        <div v-if="value >3 ">
-          <h1>hassam here</h1>
-        </div>
-        <div v-else></div>
+        <strong>Copyrights © {{ new Date().getFullYear() }} OutReal XR, UAE. All rights reserved.</strong>
       </v-col>
     </v-footer>
     <v-snackbar top color="green" v-model="snackbar">
@@ -135,9 +131,6 @@
   </div>
 </template>
 <script>
-
-// let value = JSON.stringify(this.$route.value);
-
 export default {
   beforeRouteEnter(to, from, next) {
     const token = localStorage.getItem('token')
@@ -148,12 +141,16 @@ export default {
   },
   mounted() {
     const imageUrl = localStorage.getItem('imageUrl');
-    this.imageUrl = imageUrl;
+    if (imageUrl !== 'null') {
+      this.imageUrl = imageUrl;
+    } else {
+      this.imageUrl = "http://ulm.webstudio.co.zw/themes/adminlte/img/user.png"
+    }
   },
   data: () => ({
     loading: false,
     snackbar: false,
-    imageUrl: "http://ulm.webstudio.co.zw/themes/adminlte/img/user.png",
+    imageUrl: "",
     value: '',
     checkboxroom: '',
     checkboxhall: '',
@@ -271,20 +268,25 @@ export default {
 .overview {
   margin-left: 0px !important;
 }
-.img-profile{
+
+.img-profile {
   width: 100px !important;
   height: 100px !important;
   border-radius: 50px;
 }
+
 .img {
   width: 200px;
 }
-.sidebar{
-  border-right:1px solid #F5F5F5;
+
+.sidebar {
+  border-right: 1px solid #F5F5F5;
 }
-.header{
+
+.header {
   background: white !important;
 }
+
 .v-list-item__title {
   margin-left: 20px;
 }

@@ -23,7 +23,7 @@
                     <h1
                         class="text-center display-2 light-blue--text py-4"
                     >Sign in to HoloFair App</h1>
-                    <v-form @submit.prevent="submitHandler" ref="form">
+                    <v-form @submit.prevent="submitHandler" autocomplete="off" ref="form">
                       <v-card-text>
                         <v-text-field
                             v-model="email"

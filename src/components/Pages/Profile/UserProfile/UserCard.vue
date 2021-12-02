@@ -7,9 +7,13 @@
       <v-row>
         <v-avatar class="mx-auto" size="100"
         >
-          <img
+          <img v-if="this.user.imageUrl"
               :src="this.user.imageUrl"
               alt="No Image"
+          >
+          <img v-else
+               src="http://ulm.webstudio.co.zw/themes/adminlte/img/user.png"
+               alt="No Image"
           >
         </v-avatar>
       </v-row>
@@ -36,7 +40,7 @@ export default {
     return {
       items: {
         image: null,
-        imageUrl: null
+        imageUrl: '../../public/HoloFair-by-Outreal-XR-Logo.png'
       },
       details: [
         {
