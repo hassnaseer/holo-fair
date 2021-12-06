@@ -1,16 +1,5 @@
 <template>
   <div class="container pa-5">
-    <!--    <v-data-table-->
-    <!--        :headers="headers"-->
-    <!--        :items="desserts"-->
-    <!--        hide-default-header-->
-    <!--        hide-default-footer-->
-    <!--        class="elevation-1"-->
-    <!--    ></v-data-table>-->
-    <!--    <div v-for="table in tables" :key="table.id">-->
-    <!--      <span>{{ table.to }}</span>-->
-    <!--      <span>{{ table.message }}</span>-->
-    <!--    </div>-->
     <div>
       <a-button type="primary" @click="showModal">
         Create Email
@@ -35,7 +24,10 @@
       </a-table>
       <a-modal
           v-model="visible"
-          title="Title"
+          :dialog-style="{ top: '0px' }"
+          title="Create New Email"
+          width=416
+          class="modal"
           onOk="handleOk"
           footer
       >
@@ -49,7 +41,7 @@
               </v-col>
               <v-col cols="2"><label>Message</label></v-col>
               <v-col cols="10">
-                <quillEditor v-model="message">
+                <quillEditor v-model="message" class="text-editor">
                 </quillEditor>
               </v-col>
               <v-col cols="4 ml-auto">
@@ -57,7 +49,7 @@
                   Save
                 </v-btn>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="4">
                 <v-btn :loading="loading" @click="handleCancel" color="default px-8" value="send" dark> Cancel</v-btn>
               </v-col>
             </v-row>
@@ -185,5 +177,12 @@ export default {
 <style scoped>
 .textarea {
   border: 1px solid chocolate;
+}
+.modal > .ant-modal-content {
+  position: absolute !important;
+  top: -100px !important;
+}
+.text-editor{
+  height: 450px;
 }
 </style>
